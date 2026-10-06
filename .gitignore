@@ -1,0 +1,29 @@
+# Data never goes into git (decision D005)
+data/*
+!data/.gitkeep
+
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# LLM raw outputs and caches
+.cache/
+
+# Website build output
+site/dist/
+site/node_modules/
+
+# OS and editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
