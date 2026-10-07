@@ -21,6 +21,11 @@ matching (docs/ARCHITECTURE.md, entities `uat` and `locality`).
   recent year available. Check and document whether the LAU code equals the
   SIRUTA code of the UAT. If it does not, document the mapping and stop for
   review if more than 1% of units cannot be matched by code.
+- `config/counties.yaml` (source_id `counties_iso`): county name ↔ code table,
+  compiled manually and verified by the user. Join it to SIRUTA's county
+  records on the `normalise_name()` key. All 42 entries (41 counties +
+  Bucharest) must match exactly; if any does not, stop and report. Never edit
+  this file to force a match.
 
 If either source is unreachable or the licence is unclear, stop and report.
 Do not substitute an unofficial source without asking.
@@ -33,7 +38,8 @@ Do not substitute an unofficial source without asking.
    `siruta` (int), `name` (str, diacritics normalised to comma-below),
    `name_key` (str, from `normalise_name()`), `uat_type` (enum: `comuna`,
    `oras`, `municipiu`, `municipiul_bucuresti`, `sector`), `county_code` (str,
-   two-letter vehicle-plate code; `B` for Bucharest), `county_name` (str),
+   ISO 3166-2:RO subdivision code without the `RO-` prefix, taken from
+   `config/counties.yaml`; `B` for Bucharest), `county_name` (str),
    `county_siruta` (int), plus provenance columns.
 4. `data/processed/locality.parquet`, one row per component locality:
    `siruta` (int), `name`, `name_key`, `parent_uat_siruta` (int),
@@ -46,8 +52,8 @@ Do not substitute an unofficial source without asking.
 6. `mayortracker/util/names.py` with `normalise_name(text) -> NameNormalised`
    returning the display form (cedilla ş/ţ to comma-below ș/ț, Unicode NFC,
    trimmed whitespace) and a matching key (lowercase, ASCII-folded, punctuation
-   removed, administrative prefixes such as "comuna", "oraș", "municipiul"
-   removed). Thorough unit tests, including uppercase and mixed-diacritics
+   removed, administrative prefixes such as "comuna", "oraș", "municipiul",
+   "județul" removed). Thorough unit tests, including uppercase and mixed-diacritics
    cases.
 7. Update the `siruta` and `lau_boundaries` rows in docs/DATA_SOURCES.md
    (status, exact URL, licence note).
@@ -63,6 +69,7 @@ Do not substitute an unofficial source without asking.
 4. Every UAT has exactly one boundary polygon, or is listed as unmatched.
 5. Test fixtures are synthetic (TEST names, codes of 900000 or above after
    checking that range is unused).
+6. County codes come only from `config/counties.yaml`.
 
 ## Acceptance criteria
 - [ ] `uat.parquet` and `locality.parquet` built from raw files by

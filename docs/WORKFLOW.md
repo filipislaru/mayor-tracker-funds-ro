@@ -7,9 +7,10 @@ This file is for Filip. The coding agent does not need to follow it.
 - **Claude, in the claude.ai Project**: architect and reviewer. Turns goals into
   task briefs, reviews what the agent produced, catches methodological and
   data-integrity problems, and drafts updates to SPEC, DECISIONS and TASKS.
-- **Gemini agent in Antigravity**: implementer. Writes code and runs commands
-  and tests inside the repository, following `AGENTS.md`, the rules in
-  `.agents/rules/` and the skills in `.agents/skills/`.
+- **Coding agent in Antigravity** (any model; a Gemini model makes the review
+  more independent): implementer. Writes code and runs commands and tests
+  inside the repository, following `AGENTS.md`, the rules in `.agents/rules/`
+  and the skills in `.agents/skills/`.
 - **You**: decision-maker and bridge. You approve plans, commit, and carry
   information between the two.
 
@@ -70,5 +71,5 @@ to know beyond one conversation goes into a file in the repo.
   all four appear.
 - In agent settings, require your review before terminal commands run and
   before changes outside the workspace (exact setting names vary by version).
-- Use planning mode for task work. Any Gemini model is fine; keep the same
-  model for a task's whole conversation.
+- Use planning mode for task work. Keep the same model for a task's whole
+  conversation.

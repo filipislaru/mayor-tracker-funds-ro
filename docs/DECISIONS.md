@@ -34,3 +34,15 @@ released deliberately, through the export step, after review.
 2026-10-06 · proposed
 Romanian as the primary UI language, English as secondary. To confirm before
 the first website task.
+
+## D007 — Mid-term changes of mayor
+2026-10-06 · accepted
+v1 builds terms from the 2020 and 2024 main elections. By-elections, resignations, deaths and removals are added in T003b with actual start and end dates. Until T012 defines a rule, partial terms are flagged and excluded from comparisons.
+
+## D008 — Data licences
+2026-10-06 · proposed
+Code: MIT. Each published dataset carries its own licence: layers derived from OpenTender inherit CC BY-NC-SA 4.0; other layers follow their sources' terms (CC BY 4.0 where permitted). Prefer complete primary official sources to reduce licence constraints. Confirm before the first public data release.
+
+## D009 — LLM provider
+2026-10-06 · proposed
+Decide before T009 on: extraction quality on the Romanian gold set, structured-output support, cost, terms excluding training on inputs, and a pinned model version. Consider an open-weights model for replication.

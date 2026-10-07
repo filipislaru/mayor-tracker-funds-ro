@@ -34,10 +34,10 @@ None.
      each data directory exists, and for each key in `.env.example` whether it
      is set in the environment (`set` / `missing`, never the value).
    - `mt init-data`: creates `data/raw`, `data/interim`, `data/processed`,
-     `data/export` if missing.
+     `data/export`, `data/cache/http` if missing.
 6. A shared HTTP helper `mayortracker/util/http.py` implementing the scraping
    rules (User-Agent from settings and `CONTACT_EMAIL`, per-host rate limit,
-   retries with backoff honouring `Retry-After`, on-disk cache, raw saving with
+   retries with backoff honouring `Retry-After`, on-disk cache in `data/cache/http/`, raw saving with
    `manifest.json`). It is not used yet; it is tested with mocked responses.
 7. Tests in `tests/`: CLI help and doctor run; config loads from a temporary
    YAML file; HTTP helper rate limiting, retry and manifest writing with a
@@ -60,7 +60,7 @@ None.
 - [ ] `uv run pytest` passes, with tests covering items 5–7.
 - [ ] `uv run mt doctor` output shown in the handoff.
 - [ ] CI workflow file present and valid YAML.
-- [ ] `data/` contents are git-ignored (except `.gitkeep` files if used).
+- [ ] `data/` is entirely git-ignored; `mt init-data` creates its folders.
 
 ## Out of scope
 - Downloading any data.
