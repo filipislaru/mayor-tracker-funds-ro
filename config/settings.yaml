@@ -1,0 +1,10 @@
+# Pipeline settings. Secrets never go here: they come from .env (see .env.example).
+project_name: mayor-tracker-ro
+# Relative paths are resolved against the repository root.
+data_dir: data
+# ISO 3166-2:RO county code without the "RO-" prefix (see config/counties.yaml); chosen in D004.
+pilot_county: null
+http:
+  min_seconds_between_requests: 1.0
+  # Total number of attempts per request, including the first one.
+  max_retries: 5

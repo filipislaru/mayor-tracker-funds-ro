@@ -15,4 +15,46 @@ Coding agents: read `AGENTS.md` first.
 
 ## Setup
 
-Filled in by task T001.
+### 1. Prerequisites
+
+- Python 3.12
+- [uv](https://docs.astral.sh/uv/) (fast Python package and project manager)
+
+To install `uv` (macOS / Linux):
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+### 2. Install dependencies
+
+```bash
+uv sync
+```
+
+### 3. Configure environment
+
+Copy `.env.example` to `.env` and fill in your contact email:
+```bash
+cp .env.example .env
+```
+Edit `.env` to set `CONTACT_EMAIL` (required before running any downloads).
+
+### 4. Initialize data directories
+
+```bash
+uv run mt init-data
+```
+
+### 5. Verify installation
+
+Check project and environment health:
+```bash
+uv run mt doctor
+```
+
+Run test suite and linter:
+```bash
+uv run pytest
+uv run ruff check .
+```
+
