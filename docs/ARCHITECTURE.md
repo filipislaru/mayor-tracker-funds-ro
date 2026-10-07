@@ -44,7 +44,7 @@ pipeline/src/mayortracker/
 pipeline/prompts/         versioned LLM prompts
 eval/                     hand-labelled gold sets per extraction/matching task
 tests/                    pytest, synthetic fixtures only
-data/                     git-ignored: raw/ interim/ processed/ export/
+data/                     git-ignored: raw/ interim/ processed/ export/ cache/
 site/                     static website (built from data/export/)
 handoff/                  one report per finished task
 ```

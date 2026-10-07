@@ -26,3 +26,4 @@ Status values: `to verify` (believed to exist, not yet checked), `verified`
 | `afir` | Rural development (PNDR) projects | AFIR | EAFRD-funded commune infrastructure | 2014– | to find | to verify |
 | `pnrr` | Recovery and Resilience Plan contracts | MIPE | RRF-funded local projects | 2021– | to find | to verify |
 | `ani_declarations` | Asset and interest declarations | ANI (National Integrity Agency) | Pre-office income, business ties | 2016– | Personal data; needs a dedicated task | deferred |
+| `counties_iso` | County codes (ISO 3166-2:RO) | Compiled manually, verified by the user | County codes for display and CLI options | 41 counties + Bucharest | `config/counties.yaml` | to verify |

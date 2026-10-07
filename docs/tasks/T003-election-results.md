@@ -16,10 +16,15 @@ close-race designs. Local elections were held on 27 September 2020 and
 
 ## Inputs
 - `aep_local`: official results from the Permanent Electoral Authority (AEP)
-  for both elections, at UAT level, for the mayor ballot ("primar"), including
+  for both elections, for the mayor ballot ("primar"), including
   the general mayor of Bucharest and the sector mayors. Find the official
   machine-readable files; record exact URLs. If only a third-party
   republication is machine-readable, stop and ask before using it.
+- Results are usually published per polling station. Aggregate them to the
+  race level (one race per UAT electoral circumscription) with a script,
+  keeping the polling-station table. Where AEP also publishes
+  circumscription-level totals, reconcile the aggregated totals against them
+  and report every difference.
 - `data/processed/uat.parquet` from T002.
 
 ## Deliverables
@@ -47,6 +52,9 @@ close-race designs. Local elections were held on 27 September 2020 and
    `party_normalised`, covering only names you can map unambiguously from the
    source itself (abbreviation and full name both appear). Everything else
    goes under an `unmapped:` list for review. Do not guess.
+7. `data/processed/mayor_results_polling_station.parquet`: one row per
+   candidate per polling station, with polling station identifier, the race's
+   `siruta`, votes and provenance.
 
 ## Requirements
 1. Every race joins to exactly one `uat.siruta`. Report and stop for review
@@ -70,6 +78,7 @@ close-race designs. Local elections were held on 27 September 2020 and
 - Linking the same person across 2020 and 2024 (T004).
 - Elections before 2020 (later task, same code path).
 - County council elections.
+- By-elections, resignations, deaths and removals: T003b.
 
 ## Checks to report in the handoff
 - Number of races per year; compare with the number of UATs from T002.

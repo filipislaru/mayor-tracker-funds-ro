@@ -17,7 +17,7 @@ Record which option was used, and why, in the handoff.
 - Maximum one request per second per host; add jitter. Lower if the host is slow.
 - User-Agent: `mayor-tracker-ro/<version> (+research; contact: <CONTACT_EMAIL from .env>)`.
 - Retry only transient failures (timeouts, 429, 5xx) with exponential backoff, maximum 5 attempts. Honour `Retry-After`.
-- Cache every response on disk keyed by URL, so reruns do not re-download.
+- Cache every response on disk under `data/cache/http/`, keyed by URL, so reruns do not re-download.
 
 ## Hard limits
 - Never bypass logins, paywalls, CAPTCHAs, rate limits or other technical restrictions.

@@ -1,6 +1,5 @@
-# Data never goes into git (decision D005)
-data/*
-!data/.gitkeep
+# Data never goes into git (decision D005); folders are created by `mt init-data`
+data/
 
 # Secrets
 .env
@@ -15,7 +14,7 @@ __pycache__/
 build/
 dist/
 
-# LLM raw outputs and caches
+# Generic tool caches (LLM raw outputs: data/interim/llm_raw/; HTTP cache: data/cache/http/)
 .cache/
 
 # Website build output
