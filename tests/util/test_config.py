@@ -14,6 +14,7 @@ def test_loads_temporary_yaml(project_dir: Path) -> None:
     assert settings.pilot_county is None
     assert settings.http.min_seconds_between_requests == 1.0
     assert settings.http.max_retries == 5
+    assert settings.http.max_retry_after_seconds == 300.0
     assert settings.data_dir == (project_dir / "data").resolve()
     assert settings.contact_email is None
 
@@ -38,6 +39,7 @@ def test_defaults_when_optional_keys_missing(tmp_path: Path) -> None:
     assert settings.data_dir == (tmp_path.parent / "data").resolve()
     assert settings.http.min_seconds_between_requests == 1.0
     assert settings.http.max_retries == 5
+    assert settings.http.max_retry_after_seconds == 300.0
 
 
 def test_absolute_data_dir_kept(tmp_path: Path) -> None:
@@ -90,5 +92,9 @@ def test_repository_settings_file_matches_brief() -> None:
     raw = yaml.safe_load(path.read_text(encoding="utf-8"))
     assert raw["data_dir"] == "data"
     assert raw["pilot_county"] is None
-    assert raw["http"] == {"min_seconds_between_requests": 1.0, "max_retries": 5}
+    assert raw["http"] == {
+        "min_seconds_between_requests": 1.0,
+        "max_retries": 5,
+        "max_retry_after_seconds": 300,
+    }
     assert raw["project_name"]

@@ -35,6 +35,7 @@ class HttpSettings(BaseModel):
 
     min_seconds_between_requests: float = Field(default=1.0, ge=1.0)
     max_retries: int = Field(default=5, ge=1, le=5)
+    max_retry_after_seconds: float = Field(default=300.0, ge=0.0)
 
 
 class Settings(BaseModel):

@@ -8,3 +8,5 @@ http:
   min_seconds_between_requests: 1.0
   # Total number of attempts per request, including the first one.
   max_retries: 5
+  # Maximum Retry-After delay (in seconds) to honour before giving up.
+  max_retry_after_seconds: 300
