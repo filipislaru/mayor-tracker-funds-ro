@@ -79,6 +79,16 @@ class RawFileConflict(HttpHelperError):
     """A raw file with the same path but different content already exists."""
 
 
+class RedirectNotAllowed(HttpHelperError):
+    """A redirect targets a host outside the allowed hosts."""
+
+    def __init__(self, url: str, target_url: str, target_host: str) -> None:
+        super().__init__(f"{url}: redirect to host {target_host!r} ({target_url}) is not allowed")
+        self.url = url
+        self.target_url = target_url
+        self.target_host = target_host
+
+
 @dataclass(frozen=True)
 class FetchedResponse:
     url: str
@@ -123,6 +133,11 @@ def filename_from_url(url: str) -> str:
     return name or "download"
 
 
+def _extract_host(url: str) -> str:
+    """Return lower-cased hostname from a URL, or empty string if absent."""
+    return (urlsplit(url).hostname or "").lower()
+
+
 class PoliteClient:
     """Rate-limited, retrying, caching HTTP client. Use as a context manager."""
 
@@ -145,6 +160,7 @@ class PoliteClient:
         self.user_agent = f"{USER_AGENT_TOKEN}/{__version__} (+research; contact: {email})"
         self.min_interval = settings.http.min_seconds_between_requests
         self.max_attempts = settings.http.max_retries
+        self.max_retry_after = settings.http.max_retry_after_seconds
         dirs = settings.data_dirs()
         self.cache_dir = dirs["cache_http"]
         self.raw_dir = dirs["raw"]
@@ -210,9 +226,14 @@ class PoliteClient:
                 if response.status_code != 429 and response.status_code < 500:
                     return response
                 last_problem = f"HTTP {response.status_code}"
+            delay = self._retry_after(response) if response is not None else None
+            if delay is not None and delay > self.max_retry_after:
+                raise HttpGiveUp(
+                    f"{url}: Retry-After requested {delay:.1f}s, "
+                    f"exceeding cap of {self.max_retry_after:.1f}s"
+                )
             if attempt == self.max_attempts:
                 break
-            delay = self._retry_after(response) if response is not None else None
             if delay is None:
                 base = min(MAX_BACKOFF_SECONDS, 2.0**attempt)
                 delay = base * (1 + self._rng.uniform(0, BACKOFF_JITTER))
@@ -223,15 +244,33 @@ class PoliteClient:
             self._sleep(delay)
         raise HttpGiveUp(f"{url}: giving up after {self.max_attempts} attempts ({last_problem})")
 
-    def _fetch(self, url: str, *, check_robots: bool = True) -> tuple[str, httpx.Response]:
+    def _fetch(
+        self,
+        url: str,
+        *,
+        check_robots: bool = True,
+        allowed_hosts: set[str] | None = None,
+        enforce_allowed_hosts: bool = True,
+    ) -> tuple[str, httpx.Response]:
         current = url
+        initial_host = _extract_host(url)
+        allowed = {initial_host} | ({h.lower() for h in allowed_hosts} if allowed_hosts else set())
         for _ in range(MAX_REDIRECTS + 1):
             if check_robots:
                 self._ensure_allowed(current)
             response = self._send_with_retries(current)
             location = response.headers.get("Location")
             if response.status_code in _REDIRECT_CODES and location:
-                current = urljoin(current, location)
+                next_url = urljoin(current, location)
+                if enforce_allowed_hosts:
+                    next_host = _extract_host(next_url)
+                    if next_host not in allowed:
+                        raise RedirectNotAllowed(
+                            url=current,
+                            target_url=next_url,
+                            target_host=next_host,
+                        )
+                current = next_url
                 continue
             return current, response
         raise HttpHelperError(f"{url}: more than {MAX_REDIRECTS} redirects")
@@ -244,7 +283,11 @@ class PoliteClient:
         if origin not in self._robots:
             robots_url = f"{origin}/robots.txt"
             try:
-                _, response = self._fetch(robots_url, check_robots=False)
+                _, response = self._fetch(
+                    robots_url,
+                    check_robots=False,
+                    enforce_allowed_hosts=False,
+                )
             except HttpHelperError as exc:
                 self._robots[origin] = f"robots.txt unreachable ({exc})"
             else:
@@ -302,18 +345,37 @@ class PoliteClient:
 
     # ---- public API ------------------------------------------------------------------
 
-    def get(self, url: str, *, use_cache: bool = True) -> FetchedResponse:
+    def get(
+        self,
+        url: str,
+        *,
+        use_cache: bool = True,
+        allowed_hosts: set[str] | None = None,
+    ) -> FetchedResponse:
         """GET ``url``. Serves from the on-disk cache unless ``use_cache`` is False.
 
         Raises :class:`HttpStatusError` on a non-2xx final status. Successful responses
         are always written to the cache.
         """
+        initial_host = _extract_host(url)
+        allowed = {initial_host} | ({h.lower() for h in allowed_hosts} if allowed_hosts else set())
         if use_cache:
             cached = self._cache_read(url)
             if cached is not None:
+                final_host = _extract_host(cached.final_url)
+                if final_host not in allowed:
+                    raise RedirectNotAllowed(
+                        url=url,
+                        target_url=cached.final_url,
+                        target_host=final_host,
+                    )
                 logger.debug("cache hit: %s", url)
                 return cached
-        final_url, response = self._fetch(url)
+        final_url, response = self._fetch(
+            url,
+            allowed_hosts=allowed_hosts,
+            enforce_allowed_hosts=True,
+        )
         if not response.is_success:
             raise HttpStatusError(url, response.status_code)
         fetched = FetchedResponse(
@@ -335,6 +397,7 @@ class PoliteClient:
         *,
         filename: str | None = None,
         use_cache: bool = True,
+        allowed_hosts: set[str] | None = None,
     ) -> ManifestEntry:
         """Save ``url`` under ``data/raw/<source_id>/<YYYY-MM-DD>/`` and update the manifest.
 
@@ -348,7 +411,7 @@ class PoliteClient:
         if name in {"", ".", "..", "manifest.json"} or "/" in name or "\\" in name:
             raise ValueError(f"invalid filename: {name!r}")
 
-        fetched = self.get(url, use_cache=use_cache)
+        fetched = self.get(url, use_cache=use_cache, allowed_hosts=allowed_hosts)
         retrieved_at = fetched.retrieved_at.astimezone(UTC)
         folder = self.raw_dir / source_id / retrieved_at.date().isoformat()
         target = folder / name

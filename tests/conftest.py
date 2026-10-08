@@ -34,6 +34,7 @@ pilot_county: null
 http:
   min_seconds_between_requests: 1.0
   max_retries: 5
+  max_retry_after_seconds: 300
 """
 
 ENV_EXAMPLE = """\

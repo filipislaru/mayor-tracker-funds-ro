@@ -19,6 +19,7 @@ from mayortracker.util.http import (
     MissingContactEmail,
     PoliteClient,
     RawFileConflict,
+    RedirectNotAllowed,
     RobotsDisallowed,
     RobotsUnavailable,
     filename_from_url,
@@ -423,3 +424,119 @@ def test_download_rejects_bad_source_id(client: PoliteClient, bad: str) -> None:
 )
 def test_filename_from_url(url: str, expected: str) -> None:
     assert filename_from_url(url) == expected
+
+
+# ---- T001a hardening tests -----------------------------------------------------------
+
+
+def test_retry_after_above_cap_gives_up_without_sleeping(
+    client: PoliteClient, server: Server, fake_time: FakeTime
+) -> None:
+    url = f"{HOST}/limited-long"
+    server.add(url, httpx.Response(429, headers={"Retry-After": "301"}), ok())
+    sleeps_before = list(fake_time.sleeps)
+    with pytest.raises(HttpGiveUp, match="301.0s") as excinfo:
+        client.get(url)
+    assert "exceeding cap of 300.0s" in str(excinfo.value)
+    new_sleeps = fake_time.sleeps[len(sleeps_before):]
+    assert not any(s >= 300.0 for s in new_sleeps)
+    assert server.calls(url) == 1
+
+
+def test_retry_after_at_cap_is_honoured(
+    client: PoliteClient, server: Server, fake_time: FakeTime
+) -> None:
+    url = f"{HOST}/limited-at-cap"
+    server.add(url, httpx.Response(429, headers={"Retry-After": "300"}), ok(b"TEST honoured"))
+    result = client.get(url)
+    assert result.content == b"TEST honoured"
+    assert fake_time.sleeps[-1] == 300.0
+    assert server.calls(url) == 2
+
+
+def test_cross_host_redirect_raises(client: PoliteClient, server: Server) -> None:
+    url = f"{HOST}/cross"
+    cross_url = "https://other.invalid/target"
+    server.add(url, httpx.Response(302, headers={"Location": cross_url}))
+    server.add(cross_url, ok())
+    with pytest.raises(RedirectNotAllowed) as excinfo:
+        client.get(url)
+    assert excinfo.value.target_host == "other.invalid"
+    assert server.calls(cross_url) == 0
+    assert server.calls("https://other.invalid/robots.txt") == 0
+
+
+def test_cross_host_redirect_to_allowed_host_succeeds(
+    client: PoliteClient, server: Server
+) -> None:
+    url = f"{HOST}/cross-allowed"
+    cross_url = "https://allowed.invalid/target"
+    server.add(url, httpx.Response(302, headers={"Location": cross_url}))
+    server.add("https://allowed.invalid/robots.txt", httpx.Response(404))
+    server.add(cross_url, ok(b"TEST allowed cross"))
+
+    # Case-insensitive check: "ALLOWED.INVALID" matches "allowed.invalid"
+    res = client.get(url, allowed_hosts={"ALLOWED.INVALID"})
+    assert res.content == b"TEST allowed cross"
+    assert res.final_url == cross_url
+
+
+def test_cross_host_redirect_exact_match_no_wildcards(
+    client: PoliteClient, server: Server
+) -> None:
+    url = f"{HOST}/subdomain"
+    cross_url = "https://sub.other.invalid/target"
+    server.add(url, httpx.Response(302, headers={"Location": cross_url}))
+    with pytest.raises(RedirectNotAllowed):
+        client.get(url, allowed_hosts={"other.invalid"})
+
+
+def test_same_host_redirect_works(client: PoliteClient, server: Server) -> None:
+    url = f"{HOST}/same-1"
+    target = f"{HOST}/same-2"
+    server.add(url, httpx.Response(302, headers={"Location": target}))
+    server.add(target, ok(b"TEST same host"))
+    res = client.get(url)
+    assert res.content == b"TEST same host"
+    assert res.final_url == target
+
+
+def test_robots_redirect_to_another_host_is_followed_and_rules_applied(
+    client: PoliteClient, server: Server
+) -> None:
+    foreign_robots = "https://foreign.invalid/robots.txt"
+    server.routes[f"{HOST}/robots.txt"] = [
+        httpx.Response(302, headers={"Location": foreign_robots})
+    ]
+    server.routes[foreign_robots] = [
+        robots("User-agent: mayor-tracker-ro\nDisallow: /blocked/\n")
+    ]
+    server.add(f"{HOST}/blocked/secret", ok())
+    server.add(f"{HOST}/public/doc", ok(b"TEST allowed doc"))
+
+    with pytest.raises(RobotsDisallowed):
+        client.get(f"{HOST}/blocked/secret")
+
+    res = client.get(f"{HOST}/public/doc")
+    assert res.content == b"TEST allowed doc"
+
+
+def test_download_respects_allowed_hosts(
+    client: PoliteClient, server: Server, settings: Settings
+) -> None:
+    url = f"{HOST}/data.csv"
+    target = "https://files.invalid/data.csv"
+    server.add(url, httpx.Response(302, headers={"Location": target}))
+    server.add("https://files.invalid/robots.txt", httpx.Response(404))
+    server.add(target, ok(b"TEST csv", "text/csv"))
+
+    # Without files.invalid in allowed_hosts, raises RedirectNotAllowed
+    with pytest.raises(RedirectNotAllowed):
+        client.download(url, "test_source")
+
+    # With allowed_hosts, succeeds and saves file
+    entry = client.download(url, "test_source", allowed_hosts={"files.invalid"})
+    assert entry.final_url == target
+    raw_file = settings.data_dirs()["raw"] / "test_source" / "2024-01-02" / "data.csv"
+    assert raw_file.read_bytes() == b"TEST csv"
+
