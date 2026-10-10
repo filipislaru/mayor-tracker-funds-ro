@@ -1,6 +1,6 @@
 # T001 — Repository bootstrap
 
-Status: ready
+Status: done
 Depends on: —
 Branch: task/T001-repo-bootstrap
 

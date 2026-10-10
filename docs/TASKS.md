@@ -8,8 +8,8 @@ Status: `draft` → `ready` → `in progress` → `in review` → `done`
 | ID | Task | Depends on | Status |
 |---|---|---|---|
 | T001 | Repository bootstrap: Python project, CLI skeleton, config, tests, CI | — | done |
-| T001a | HTTP helper hardening | T001 | in review |
-| T002 | UAT and locality reference tables, boundaries, name normalisation | T001 | ready |
+| T001a | HTTP helper hardening | T001 | done |
+| T002 | UAT and locality reference tables, boundaries, name normalisation | T001 | in progress |
 | T003 | Mayoral election results 2020 and 2024 | T001, T002 | ready |
 | T003b | By-elections and mid-term changes of mayor, 2020–2024 term (actual term start and end dates) | T003 | draft |
 | T004 | Link the same person across elections (2020 ↔ 2024) | T003 | draft |
