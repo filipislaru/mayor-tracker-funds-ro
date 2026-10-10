@@ -20,6 +20,7 @@ Record which option was used, and why, in the handoff.
 - Cache every response on disk under `data/cache/http/`, keyed by URL, so reruns do not re-download.
 
 ## Hard limits
+- Never disable TLS certificate verification, including during exploration: no curl -k/--insecure, no verify=False, no ssl.CERT_NONE. If a certificate fails, stop and report.
 - Never bypass logins, paywalls, CAPTCHAs, rate limits or other technical restrictions.
 - Never submit forms that change state, create accounts or use credentials.
 - Never collect social-media content, user profiles or reader comments.

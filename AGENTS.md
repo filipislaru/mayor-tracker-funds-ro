@@ -60,6 +60,7 @@ Sources: @docs/DATA_SOURCES.md · Decisions: @docs/DECISIONS.md
    corrections file (`config/corrections/*.yaml`) with a reason for each entry.
 7. **Report what you observe.** Row counts, null rates, duplicates, unmatched
    records. Never hide or round away a problem.
+8. **Never disable TLS certificate verification, including during exploration: no curl -k/--insecure, no verify=False, no ssl.CERT_NONE. If a certificate fails, stop and report.**
 
 ## Scraping and downloading
 
