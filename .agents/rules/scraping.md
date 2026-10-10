@@ -21,6 +21,7 @@ Record which option was used, and why, in the handoff.
 
 ## Hard limits
 - Never bypass logins, paywalls, CAPTCHAs, rate limits or other technical restrictions.
+- Never add, fake or alter request headers (Referer, browser-like User-Agent, cookies) to get past a block. Use only the project User-Agent. A 401 or 403 response means stop and report.
 - Never submit forms that change state, create accounts or use credentials.
 - Never collect social-media content, user profiles or reader comments.
 - Never follow links to sites outside the source's own domain unless the brief lists them.
