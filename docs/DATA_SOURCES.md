@@ -10,8 +10,8 @@ Status values: `to verify` (believed to exist, not yet checked), `verified`
 
 | source_id | Source | Publisher | Used for | Coverage | Access and licence | Status |
 |---|---|---|---|---|---|---|
-| `siruta` | SIRUTA nomenclature of administrative units and localities | INS (National Institute of Statistics) | UAT and village reference table | current | Official file; locate current version | to verify |
-| `lau_boundaries` | LAU boundaries | Eurostat GISCO | Map polygons; check that LAU codes match SIRUTA | recent years | Check licence and attribution terms | to verify |
+| `siruta` | SIRUTA nomenclature of administrative units and localities | INS (via data.gov.ro & insse.ro) | UAT and village reference table | mai 2021 | data.gov.ro (CC-BY-4.0) & insse.ro | blocked |
+| `lau_boundaries` | LAU boundaries | Eurostat GISCO | Map polygons; LAU code equals SIRUTA (RO_<siruta>) | 2024 (rev. 2026) | Eurostat open data (© EuroGeographics) | verified |
 | `aep_local` | Local election results | AEP (Permanent Electoral Authority) | Mayors, parties, votes, margins | 2008–2024 | Official results; format to document | to verify |
 | `kohesio` | Kohesio projects and beneficiaries | European Commission (DG REGIO) | EU cohesion projects (ERDF, Cohesion Fund, ESF), 2014–2020; 2021–2027 being added | EU-wide | CSV/XLSX/RDF downloads; locations are sometimes the beneficiary's address | to verify |
 | `eu_far` | EU Funds Absorbed by Romanian Municipalities, 2016–2022 (Marin & Glăvan) | UK Data Service | EU funds per UAT from budget execution | 2016–2022 | UKDS account; check licence | to verify |
