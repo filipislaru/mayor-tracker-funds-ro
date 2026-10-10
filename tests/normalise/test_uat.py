@@ -16,6 +16,7 @@ from mayortracker.normalise.uat import (
     load_and_verify_counties,
     parse_siruta_records,
     process_boundaries,
+    read_siruta_csv,
     write_parquet_tables,
 )
 from mayortracker.schemas.geo import LocalityRecord, UatRecord, UatType
@@ -363,3 +364,22 @@ def test_write_parquet_tables_and_process_boundaries(tmp_path: Path) -> None:
     assert data["type"] == "FeatureCollection"
     assert len(data["features"]) == 1
     assert data["features"][0]["properties"]["siruta"] == 910001
+
+
+def test_read_siruta_csv_strict_decoding(tmp_path: Path) -> None:
+    csv_file = tmp_path / "TEST_valid.csv"
+    # Write UTF-8 with BOM and diacritics
+    content = "\ufeffsiruta,niv,denloc\n900001,1,TEST Județ\n"
+    csv_file.write_text(content, encoding="utf-8")
+
+    rows = read_siruta_csv(csv_file)
+    assert len(rows) == 1
+    assert rows[0]["siruta"] == "900001"
+    assert rows[0]["denloc"] == "TEST Județ"
+
+    # Write corrupt byte sequence that is invalid UTF-8
+    bad_csv = tmp_path / "TEST_bad.csv"
+    bad_csv.write_bytes(b"\xff\xfe\x00\x00siruta,niv\n")
+
+    with pytest.raises(ValueError, match="Strict decoding failed without replacement"):
+        read_siruta_csv(bad_csv)

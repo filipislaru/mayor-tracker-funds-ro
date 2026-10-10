@@ -22,9 +22,14 @@ from mayortracker.util.names import normalise_name
 
 logger = logging.getLogger(__name__)
 
-# --- Official SIRUTA nomenclature documentation quote & URL ---
+# --- SIRUTA nomenclature documentation quote & URL ---
 # Source: Institutul Național de Statistică (INS)
 # URL: https://insse.ro/cms/ro/content/registrul-unitatilor-administrativ-teritoriale-al-romaniei
+# STATUS: UNVERIFIED, to be checked by the user against the INS page
+# (insse.ro returned HTTP 503 during automated access, so this text was not
+#  read from a page or document directly accessed in this session; it must be checked
+#  by the user against the official INS page).
+#
 # Quote:
 # "Registrul unităţilor administrativ-teritoriale al României (SIRUTA) este organizat
 #  ierarhic pe trei nivele:
@@ -50,6 +55,25 @@ logger = logging.getLogger(__name__)
 SIRUTA_NIV_COUNTY = 1
 SIRUTA_NIV_UAT = 2
 SIRUTA_NIV_LOCALITY = 3
+
+SIRUTA_ENCODING = "utf-8-sig"
+
+
+def read_siruta_csv(path: Path, encoding: str = SIRUTA_ENCODING) -> list[dict[str, str]]:
+    """Read SIRUTA CSV records with strict decoding (no errors='replace').
+
+    Uses utf-8-sig strictly by default to handle standard UTF-8 and strip any leading
+    UTF-8 BOM. Stops with a clear error if decoding fails.
+    """
+    try:
+        with path.open("r", encoding=encoding, errors="strict", newline="") as f:
+            reader = csv.DictReader(f)
+            return list(reader)
+    except UnicodeDecodeError as err:
+        raise ValueError(
+            f"Failed to decode SIRUTA file {path} with expected encoding {encoding!r}: {err}. "
+            f"Strict decoding failed without replacement. Please verify the raw file encoding."
+        ) from err
 
 # Documented TIP mappings
 SIRUTA_LEVEL_1_TIPS = {40: "judet"}
@@ -176,9 +200,7 @@ def parse_siruta_records(
     counties_by_siruta: dict[int, dict[str, Any]],
 ) -> tuple[list[UatRecord], list[LocalityRecord]]:
     """Parse raw SIRUTA CSV records into typed UatRecord and LocalityRecord models."""
-    with siruta_path.open("r", encoding="utf-8", errors="replace") as f:
-        reader = csv.DictReader(f)
-        rows = list(reader)
+    rows = read_siruta_csv(siruta_path)
 
     # Map county by INS 'jud' integer for quick level 2 lookup
     county_by_jud: dict[int, dict[str, Any]] = {
@@ -451,10 +473,9 @@ def normalise_uat(settings: Settings) -> None:
     # 1. Ingest raw SIRUTA
     siruta_info = find_latest_raw_source(raw_dir, "siruta", "*.csv")
 
-    # Read level 1 county records first for validation
-    with siruta_info.file_path.open("r", encoding="utf-8", errors="replace") as f:
-        reader = csv.DictReader(f)
-        siruta_counties = [r for r in reader if int(r["niv"]) == SIRUTA_NIV_COUNTY]
+    # Read records strictly with expected encoding
+    all_rows = read_siruta_csv(siruta_info.file_path)
+    siruta_counties = [r for r in all_rows if int(r["niv"]) == SIRUTA_NIV_COUNTY]
 
     counties_by_siruta = load_and_verify_counties(repo_root, siruta_counties)
 
