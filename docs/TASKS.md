@@ -42,5 +42,5 @@ Status: `draft` → `ready` → `in progress` → `in review` → `done`
 
 | ID | Task | Depends on | Status |
 |---|---|---|---|
-| P01 | Probe: access to tender documentation and TED notice text | T001a | in progress |
+| P01 | Probe: access to tender documentation and TED notice text | T001a | in review |
 

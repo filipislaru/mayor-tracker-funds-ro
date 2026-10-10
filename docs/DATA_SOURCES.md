@@ -17,8 +17,8 @@ Status values: `to verify` (believed to exist, not yet checked), `verified`
 | `eu_far` | EU Funds Absorbed by Romanian Municipalities, 2016–2022 (Marin & Glăvan) | UK Data Service | EU funds per UAT from budget execution | 2016–2022 | UKDS account; check licence | to verify |
 | `budget_exec` | Local budget execution by UAT | MDLPA, Directorate for Local Fiscal and Budgetary Policies | Revenues, expenditures, EU funds, transfers | to check | to check | to verify |
 | `opentender_ro` | OpenTender Romania (OCDS) | Government Transparency Institute | Procurement contracts and risk indicators | 2007–2024 | CC BY-NC-SA 4.0 (non-commercial) | to verify |
-| `ted` | Tenders Electronic Daily | EU Publications Office | Above-threshold notices, incl. selection-criteria text | EU-wide | API and bulk downloads | to verify |
-| `sicap` | SICAP / e-licitatie.ro | ADR | National procurement incl. tender documentation | 2018– | Bulk access uncertain | to verify |
+| `ted` | Tenders Electronic Daily | EU Publications Office | Above-threshold notices, incl. selection-criteria text | EU-wide | API and bulk downloads | verified |
+| `sicap` | SICAP / e-licitatie.ro | ADR | National procurement incl. tender documentation | 2018– | Bulk access uncertain | blocked |
 | `efor_programmes` | PNDL and Anghel Saligny maps and databases | Expert Forum | National programme allocations by UAT | 2014– | Ask permission before reuse | to request |
 | `art155_reports` | Mayors' annual reports (Art. 155, Administrative Code) | Each UAT website | Claimed achievements | 2020– | Public documents; polite crawling | to verify |
 | `dev_strategies` | Local development strategies | UAT websites | Planned projects | varies | Public documents | to verify |
