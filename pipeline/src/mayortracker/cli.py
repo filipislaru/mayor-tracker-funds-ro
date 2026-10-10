@@ -9,6 +9,7 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+from typing import Annotated
 
 import typer
 
@@ -133,6 +134,45 @@ def ingest_lau_boundaries_cmd() -> None:
     typer.echo(
         f"Downloaded LAU boundaries: {entry.filename} ({entry.bytes} bytes, "
         f"sha256={entry.sha256[:8]}...)"
+    )
+
+
+@ingest_app.command("register-file")
+def register_file_cmd(
+    path: Annotated[
+        Path,
+        typer.Argument(
+            help="Path to local file to register into data/raw/<source_id>/<date>/.",
+        ),
+    ],
+    source_id: Annotated[
+        str,
+        typer.Option(
+            "--source-id",
+            help="Source ID matching data source, e.g. 'siruta'.",
+        ),
+    ],
+    source_url: Annotated[
+        str,
+        typer.Option(
+            "--source-url",
+            help="Exact URL where the file was obtained.",
+        ),
+    ],
+) -> None:
+    """Register a manually acquired raw file into data/raw/ with a manifest entry."""
+    from mayortracker.ingest.register import register_file
+
+    settings = load_settings()
+    entry = register_file(
+        path,
+        source_id=source_id,
+        source_url=source_url,
+        settings=settings,
+    )
+    typer.echo(
+        f"Registered {entry.filename} ({entry.bytes} bytes, sha256={entry.sha256[:8]}...) "
+        f"under data/raw/{source_id}/"
     )
 
 
