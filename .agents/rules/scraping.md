@@ -20,6 +20,7 @@ Record which option was used, and why, in the handoff.
 - Cache every response on disk under `data/cache/http/`, keyed by URL, so reruns do not re-download.
 
 ## Hard limits
+- Never disable TLS certificate verification, including during exploration: no curl -k/--insecure, no verify=False, no ssl.CERT_NONE. If a certificate fails, stop and report.
 - Never bypass logins, paywalls, CAPTCHAs, rate limits or other technical restrictions.
 - Never add, fake or alter request headers (Referer, browser-like User-Agent, cookies) to get past a block. Use only the project User-Agent. A 401 or 403 response means stop and report.
 - Never submit forms that change state, create accounts or use credentials.

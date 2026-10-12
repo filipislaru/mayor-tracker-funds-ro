@@ -1,6 +1,6 @@
 # T001a — HTTP helper hardening
 
-Status: ready
+Status: done
 Depends on: T001
 Branch: task/T001a-http-hardening
 

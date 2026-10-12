@@ -1,1 +1,5 @@
-"""Normalise stage: clean raw files into tables under data/interim/."""
+"""Data normalisation pipelines."""
+
+from mayortracker.normalise.uat import normalise_uat
+
+__all__ = ["normalise_uat"]

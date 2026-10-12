@@ -9,6 +9,7 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+from typing import Annotated
 
 import typer
 
@@ -103,5 +104,97 @@ def init_data() -> None:
         typer.echo(f"{'created' if created else 'exists ':<8} {path}")
 
 
+ingest_app = typer.Typer(
+    name="ingest",
+    help="Ingest raw datasets from external sources.",
+    no_args_is_help=True,
+)
+app.add_typer(ingest_app, name="ingest")
+
+
+@ingest_app.command("siruta")
+def ingest_siruta_cmd() -> None:
+    """Download official SIRUTA nomenclature CSV from data.gov.ro."""
+    from mayortracker.ingest.siruta import ingest_siruta
+
+    settings = load_settings()
+    entries = ingest_siruta(settings)
+    for entry in entries:
+        typer.echo(
+            f"Downloaded {entry.filename} ({entry.bytes} bytes, sha256={entry.sha256[:8]}...)"
+        )
+
+
+@ingest_app.command("lau-boundaries")
+def ingest_lau_boundaries_cmd() -> None:
+    """Download Eurostat GISCO LAU boundaries shapefile zip."""
+    from mayortracker.ingest.boundaries import ingest_lau_boundaries
+
+    settings = load_settings()
+    entry = ingest_lau_boundaries(settings)
+    typer.echo(
+        f"Downloaded LAU boundaries: {entry.filename} ({entry.bytes} bytes, "
+        f"sha256={entry.sha256[:8]}...)"
+    )
+
+
+@ingest_app.command("register-file")
+def register_file_cmd(
+    path: Annotated[
+        Path,
+        typer.Argument(
+            help="Path to local file to register into data/raw/<source_id>/<date>/.",
+        ),
+    ],
+    source_id: Annotated[
+        str,
+        typer.Option(
+            "--source-id",
+            help="Source ID matching data source, e.g. 'siruta'.",
+        ),
+    ],
+    source_url: Annotated[
+        str,
+        typer.Option(
+            "--source-url",
+            help="Exact URL where the file was obtained.",
+        ),
+    ],
+) -> None:
+    """Register a manually acquired raw file into data/raw/ with a manifest entry."""
+    from mayortracker.ingest.register import register_file
+
+    settings = load_settings()
+    entry = register_file(
+        path,
+        source_id=source_id,
+        source_url=source_url,
+        settings=settings,
+    )
+    typer.echo(
+        f"Registered {entry.filename} ({entry.bytes} bytes, sha256={entry.sha256[:8]}...) "
+        f"under data/raw/{source_id}/"
+    )
+
+
+normalise_app = typer.Typer(
+    name="normalise",
+    help="Normalise raw datasets into processed reference tables.",
+    no_args_is_help=True,
+)
+app.add_typer(normalise_app, name="normalise")
+
+
+@normalise_app.command("uat")
+def normalise_uat_cmd() -> None:
+    """Normalise UAT and locality reference tables, join boundaries, and export geometries."""
+    from mayortracker.normalise.uat import normalise_uat
+
+    settings = load_settings()
+    normalise_uat(settings)
+    typer.echo("Normalised UAT and locality tables and geometries successfully.")
+
+
 if __name__ == "__main__":  # pragma: no cover
     app()
+
