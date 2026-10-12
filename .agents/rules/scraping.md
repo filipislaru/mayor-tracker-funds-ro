@@ -22,9 +22,11 @@ Record which option was used, and why, in the handoff.
 ## Hard limits
 - Never disable TLS certificate verification, including during exploration: no curl -k/--insecure, no verify=False, no ssl.CERT_NONE. If a certificate fails, stop and report.
 - Never bypass logins, paywalls, CAPTCHAs, rate limits or other technical restrictions.
+- Never add, fake or alter request headers (Referer, browser-like User-Agent, cookies) to get past a block. Use only the project User-Agent. A 401 or 403 response means stop and report.
 - Never submit forms that change state, create accounts or use credentials.
 - Never collect social-media content, user profiles or reader comments.
 - Never follow links to sites outside the source's own domain unless the brief lists them.
+- Limits and restrictions in a brief (request counts, sample sizes, allowed sources) apply to all work in the task, including exploratory terminal commands. Track usage as you go and stop before reaching a limit; ask the user if more is needed.
 
 ## Saving
 - Raw files go to `data/raw/<source_id>/<YYYY-MM-DD>/`, original filename preserved where possible.

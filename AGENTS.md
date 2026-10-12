@@ -35,6 +35,7 @@ Sources: @docs/DATA_SOURCES.md · Decisions: @docs/DECISIONS.md
 - Stay inside the task's scope. No unrelated refactors, renames or upgrades.
 - If something important is ambiguous, ask the user before proceeding rather
   than choosing silently.
+- Limits and restrictions in a brief (request counts, sample sizes, allowed sources) apply to all work in the task, including exploratory terminal commands. Track usage as you go and stop before reaching a limit; ask the user if more is needed.
 
 ## Data integrity (the most important section)
 
@@ -70,6 +71,7 @@ Sources: @docs/DATA_SOURCES.md · Decisions: @docs/DECISIONS.md
   Cache responses and retry with exponential backoff.
 - Never bypass logins, paywalls, CAPTCHAs or rate limits. Never use anyone's
   credentials.
+- Never add, fake or alter request headers (Referer, browser-like User-Agent, cookies) to get past a block. Use only the project User-Agent. A 401 or 403 response means stop and report.
 - Do not collect social-media content or reader comments.
 - Full rules: `.agents/rules/scraping.md`.
 
