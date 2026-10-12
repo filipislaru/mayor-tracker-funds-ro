@@ -8,6 +8,8 @@ funds they secured, and how risky their procurement looked. Then use the same
 data for an academic paper on local governance, EU funds and political
 economy in Romania.
 
+Guiding question: where does EU and national development money go at local level, how fast is it spent, how competitively is it procured, and is it delivered?
+
 ## Unit of analysis
 
 The **mayor-term**: one mayor in one administrative unit (UAT, identified by
@@ -36,6 +38,7 @@ its SIRUTA code) for one term of office.
 - **Funds secured** per capita, by source.
 - **Procurement integrity risk**: share of single-bid contracts and other
   documented red flags.
+- **Timing** (planned, task T014): how contracting and spending are distributed over each mayor's term and each EU programming period, including the share concentrated in the final months of a period and spikes before elections.
 - **Context** shown alongside: alignment with central government, population,
   own revenues, discretionary transfers received.
 

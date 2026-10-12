@@ -25,6 +25,7 @@ Record which option was used, and why, in the handoff.
 - Never submit forms that change state, create accounts or use credentials.
 - Never collect social-media content, user profiles or reader comments.
 - Never follow links to sites outside the source's own domain unless the brief lists them.
+- Limits and restrictions in a brief (request counts, sample sizes, allowed sources) apply to all work in the task, including exploratory terminal commands. Track usage as you go and stop before reaching a limit; ask the user if more is needed.
 
 ## Saving
 - Raw files go to `data/raw/<source_id>/<YYYY-MM-DD>/`, original filename preserved where possible.

@@ -1,6 +1,6 @@
 # P01 — Probe: access to tender documentation and TED notice text
 
-Status: ready
+Status: done
 Depends on: T001a
 Branch: task/P01-tender-docs-probe
 

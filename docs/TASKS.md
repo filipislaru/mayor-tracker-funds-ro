@@ -37,10 +37,11 @@ Status: `draft` → `ready` → `in progress` → `in review` → `done`
 |---|---|---|---|
 | T012 | Indicator computation, method v1 (needs a rule for partial terms from T003b) | T011 | draft |
 | T013 | Website skeleton: map + mayor page from export JSON | T003, D003, D006 | draft |
+| T014 | Timing indicators: contracting and spending profile over mayoral terms and EU programming periods, end-of-period concentration, pre-election spikes | T003b, T005, T006, T007 | draft |
 
 ## Probes
 
 | ID | Task | Depends on | Status |
 |---|---|---|---|
-| P01 | Probe: access to tender documentation and TED notice text | T001a | in review |
+| P01 | Probe: access to tender documentation and TED notice text | T001a | done |
 
