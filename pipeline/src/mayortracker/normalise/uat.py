@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import io
 import json
 import logging
 from dataclasses import dataclass
@@ -22,35 +23,34 @@ from mayortracker.util.names import normalise_name
 
 logger = logging.getLogger(__name__)
 
-# --- SIRUTA nomenclature documentation quote & URL ---
-# Source: Institutul Național de Statistică (INS)
-# URL: https://insse.ro/cms/ro/content/registrul-unitatilor-administrativ-teritoriale-al-romaniei
-# STATUS: UNVERIFIED, to be checked by the user against the INS page
-# (insse.ro returned HTTP 503 during automated access, so this text was not
-#  read from a page or document directly accessed in this session; it must be checked
-#  by the user against the official INS page).
+# --- Official SIRUTA nomenclature documentation quote & URL ---
+# Source: Institutul Național de Statistică (INS), legenda-siruta.xml
+# URL: https://data.gov.ro/dataset/06950cb3-41b7-48b8-91bb-4a329786d178/resource/8d5d8a77-d8bf-425d-a9f9-2514d751e84e/download/legenda-siruta.xml
+# Dataset: https://data.gov.ro/dataset/siruta_s1-2026
 #
-# Quote:
-# "Registrul unităţilor administrativ-teritoriale al României (SIRUTA) este organizat
-#  ierarhic pe trei nivele:
-#  Nivelul 1: Judeţe şi Municipiul Bucureşti (tip 40)
-#  Nivelul 2: Unităţi administrativ-teritoriale:
-#             - Municipii reşedinţă de judeţ (tip 1)
-#             - Oraşe (tip 2)
-#             - Comune (tip 3)
-#             - Municipii (altele decât reşedinţă de judeţ) (tip 4)
-#             - Oraşe reşedinţă de judeţ (tip 5)
-#             - Municipiul Bucureşti (tip 9, nivel 2)
-#  Nivelul 3: Localităţi componente şi sate:
-#             - Sectoarele municipiului Bucureşti (tip 6)
-#             - Localitate componentă - reşedinţă de municipiu (tip 9, nivel 3)
-#             - Localitate componentă a unui municipiu (alta decât reşedinţă) (tip 10)
-#             - Sat ce aparţine de municipiu (tip 11)
-#             - Localitate componentă - reşedinţă de oraş (tip 17)
-#             - Localitate componentă a unui oraş (alta decât reşedinţă) (tip 18)
-#             - Sat ce aparţine de oraş (tip 19)
-#             - Sat reşedinţă de comună (tip 22)
-#             - Sat ce aparţine de comună (altul decât reşedinţă) (tip 23)"
+# Exact text from documentation file (legenda-siruta.xml):
+#
+# Nivelurile Unităților Administrativ Teritoriale (UAT):
+# - NIVEL 1: 1. Judeţe, Municipiul Bucureşti
+# - NIVEL 2: 2. Municipii, 3. Oraşe, 4. Comune
+# - NIVEL 3: 5. Localităţi componente, 6. Sate, 7. Sectoare ale capitalei
+#
+# Nomenclatorul tipurilor de localități (Cod tip | Denumire tip localitate):
+# - 40: Județ,,municipiul București
+# - 1: Municipiu reședintă de judet, municipiul București
+# - 2: Oraș ce aparține de judet, altul decât  reședința de județ
+# - 3: Comună
+# - 4: Municipiu,altul decât reședința de judet
+# - 5: Oraș resedință de judet
+# - 6: Sectoarele municipiului București
+# - 9: Localitate componentă, reședință de municipiu (NIVEL 3) / Municipiul București (NIVEL 2)
+# - 10: Localitate componentă a unui municipiu alta decât reşedinţă de municipiu
+# - 11: Sat ce aparține de municipiu
+# - 17: Localitate componentă resedință a orașului
+# - 18: Localităti  componente ale orașului altele decât reședința de oraș
+# - 19: Sate subordonate unui oraș
+# - 22: Sat resedintă de comună
+# - 23: Sat ce apartine de comună, altele decât resedința de comună
 
 SIRUTA_NIV_COUNTY = 1
 SIRUTA_NIV_UAT = 2
@@ -60,20 +60,36 @@ SIRUTA_ENCODING = "utf-8-sig"
 
 
 def read_siruta_csv(path: Path, encoding: str = SIRUTA_ENCODING) -> list[dict[str, str]]:
-    """Read SIRUTA CSV records with strict decoding (no errors='replace').
+    """Read SIRUTA CSV records with strict format verification and decoding (no errors='replace').
 
-    Uses utf-8-sig strictly by default to handle standard UTF-8 and strip any leading
-    UTF-8 BOM. Stops with a clear error if decoding fails.
+    Verifies magic bytes to ensure file is genuine text CSV and not a binary archive (e.g. XLSX).
+    Detects delimiter (semicolon or comma). Uses utf-8-sig strictly by default to handle
+    standard UTF-8 and strip any leading UTF-8 BOM. Normalizes field names to lowercase.
+    Stops with a clear error if format verification or decoding fails.
     """
+    content = path.read_bytes()
+    if content.startswith(b"PK\x03\x04"):
+        raise ValueError(
+            f"File {path.name} is a ZIP/XLSX archive, not a valid CSV. "
+            "data.gov.ro has published XLSX workbooks mislabeled with .csv extensions."
+        )
+    if content.startswith(b"\xd0\xcf\x11\xe0"):
+        raise ValueError(
+            f"File {path.name} is an OLE binary document (.doc/.xls), not a valid CSV."
+        )
+
     try:
-        with path.open("r", encoding=encoding, errors="strict", newline="") as f:
-            reader = csv.DictReader(f)
-            return list(reader)
+        text = content.decode(encoding)
     except UnicodeDecodeError as err:
         raise ValueError(
             f"Failed to decode SIRUTA file {path} with expected encoding {encoding!r}: {err}. "
             f"Strict decoding failed without replacement. Please verify the raw file encoding."
         ) from err
+
+    first_line = text.splitlines()[0] if text else ""
+    delimiter = ";" if ";" in first_line else ","
+    reader = csv.DictReader(io.StringIO(text), delimiter=delimiter)
+    return [{(k.lower() if k else ""): v for k, v in row.items()} for row in reader]
 
 # Documented TIP mappings
 SIRUTA_LEVEL_1_TIPS = {40: "judet"}

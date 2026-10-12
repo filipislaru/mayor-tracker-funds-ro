@@ -118,10 +118,11 @@ def ingest_siruta_cmd() -> None:
     from mayortracker.ingest.siruta import ingest_siruta
 
     settings = load_settings()
-    entry = ingest_siruta(settings)
-    typer.echo(
-        f"Downloaded SIRUTA: {entry.filename} ({entry.bytes} bytes, sha256={entry.sha256[:8]}...)"
-    )
+    entries = ingest_siruta(settings)
+    for entry in entries:
+        typer.echo(
+            f"Downloaded {entry.filename} ({entry.bytes} bytes, sha256={entry.sha256[:8]}...)"
+        )
 
 
 @ingest_app.command("lau-boundaries")

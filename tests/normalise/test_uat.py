@@ -383,3 +383,11 @@ def test_read_siruta_csv_strict_decoding(tmp_path: Path) -> None:
 
     with pytest.raises(ValueError, match="Strict decoding failed without replacement"):
         read_siruta_csv(bad_csv)
+
+
+def test_read_siruta_csv_rejects_xlsx(tmp_path: Path) -> None:
+    xlsx_file = tmp_path / "TEST_fake.csv"
+    xlsx_file.write_bytes(b"PK\x03\x04\x14\x00\x06\x00[Content_Types].xml")
+
+    with pytest.raises(ValueError, match="ZIP/XLSX archive, not a valid CSV"):
+        read_siruta_csv(xlsx_file)
