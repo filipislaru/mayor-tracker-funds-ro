@@ -35,6 +35,7 @@ Sources: @docs/DATA_SOURCES.md · Decisions: @docs/DECISIONS.md
 - Stay inside the task's scope. No unrelated refactors, renames or upgrades.
 - If something important is ambiguous, ask the user before proceeding rather
   than choosing silently.
+- Limits and restrictions in a brief (request counts, sample sizes, allowed sources) apply to all work in the task, including exploratory terminal commands. Track usage as you go and stop before reaching a limit; ask the user if more is needed.
 
 ## Data integrity (the most important section)
 

@@ -46,3 +46,7 @@ Code: MIT. Each published dataset carries its own licence: layers derived from O
 ## D009 — LLM provider
 2026-10-06 · proposed
 Decide before T009 on: extraction quality on the Romanian gold set, structured-output support, cost, terms excluding training on inputs, and a pinned model version. Consider an open-weights model for replication.
+
+## D010 — Timing indicators
+2026-10-12 · accepted
+Add timing indicators (distribution of contracting and spending over mayoral terms and EU programming periods; end-of-period concentration; pre-election spikes) as a later task, T014. The existing task order is unchanged. Reason: evidence that Romanian EU-funds spending is slow and concentrated at the end of programming periods.
