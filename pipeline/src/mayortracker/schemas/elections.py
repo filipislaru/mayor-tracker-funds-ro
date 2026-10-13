@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from datetime import date, datetime
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 class MayorCandidateRecord(BaseModel):
@@ -62,9 +62,26 @@ class MayorRaceRecord(BaseModel):
     votes_cast: int = Field(
         ..., ge=0, description="Total voters present at urns in deciding round (b)"
     )
-    valid_votes: int = Field(
-        ..., ge=0, description="Total valid votes in the deciding round (c)"
+    valid_votes_reported: int | None = Field(
+        None, ge=0, description="Total valid votes as reported in official source minutes"
     )
+    valid_votes: int = Field(
+        ...,
+        ge=0,
+        description="Total valid votes in deciding round (c), adjusted if station totals conflict",
+    )
+    valid_votes_adjusted: bool = Field(
+        False,
+        description="True if valid_votes was adjusted from reported figure due to station defects",
+    )
+
+    @model_validator(mode="before")
+    @classmethod
+    def _default_valid_votes_reported(cls, data: object) -> object:
+        if isinstance(data, dict):
+            if "valid_votes_reported" not in data or data["valid_votes_reported"] is None:
+                data["valid_votes_reported"] = data.get("valid_votes")
+        return data
     n_candidates: int = Field(
         ..., ge=1, description="Number of candidates standing in the deciding round"
     )

@@ -330,7 +330,9 @@ def test_parquet_table_writer(tmp_path: Path) -> None:
         "is_uncontested": True,
         "registered_voters": 1000,
         "votes_cast": 550,
+        "valid_votes_reported": 500,
         "valid_votes": 500,
+        "valid_votes_adjusted": False,
         "n_candidates": 1,
         "winner_candidate_id": "2024-900001-r1-1",
         "winner_vote_share": 100.0,
@@ -380,6 +382,8 @@ def test_parquet_table_writer(tmp_path: Path) -> None:
 
     races_t = pq.read_table(tmp_path / "mayor_races.parquet")
     assert races_t.schema.field("election_date").type == pa.date32()
+    assert races_t.schema.field("valid_votes_reported").type == pa.int64()
+    assert races_t.schema.field("valid_votes_adjusted").type == pa.bool_()
     assert races_t.num_rows == 1
 
 
@@ -424,3 +428,23 @@ siruta_mappings:
     assert overrides["rerun_races"][2020][900001]["election_date"] == date(2021, 1, 24)
     assert overrides["rerun_races"][2020][900001]["is_repeated_or_annulled"] is True
     assert overrides["siruta_mappings"][2020][900002] == 900003
+
+
+def test_check_race_uat_matching() -> None:
+    from mayortracker.normalise.elections import check_race_uat_matching
+
+    valid_sirutas = {900001, 900002}
+    races = [
+        {"siruta": 900001, "year": 2024},
+        {"siruta": 900099, "year": 2024},  # Unrecognised SIRUTA not in UAT table
+    ]
+
+    result = check_race_uat_matching(races, valid_sirutas)
+    assert result["total_races"] == 2
+    assert result["matched_count"] == 1
+    assert result["unmatched_races"] == [900099]
+    assert result["missing_uats"] == [900002]
+    assert result["match_rate"] == 0.5
+    # Verify records were preserved and never dropped
+    assert len(races) == 2
+

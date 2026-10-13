@@ -105,6 +105,35 @@ def load_election_overrides(config_path: Path) -> dict[str, Any]:
     }
 
 
+def check_race_uat_matching(
+    races: list[dict[str, Any]], valid_sirutas: set[int]
+) -> dict[str, Any]:
+    """Verify race SIRUTA codes against official UAT reference table.
+
+    Never drops races with unrecognised SIRUTAs; reports matched, unmatched races, and missing UATs.
+    """
+    race_sirutas = {r["siruta"] for r in races}
+    matched = race_sirutas & valid_sirutas
+    unmatched_races = race_sirutas - valid_sirutas
+    missing_uats = valid_sirutas - race_sirutas
+
+    if unmatched_races:
+        logger.warning(
+            "Found %d races with SIRUTA codes not present in uat.parquet: %s. Preserving records.",
+            len(unmatched_races),
+            sorted(unmatched_races),
+        )
+
+    return {
+        "total_races": len(races),
+        "matched_count": len(matched),
+        "unmatched_races": sorted(unmatched_races),
+        "missing_uats": sorted(missing_uats),
+        "match_rate": len(matched) / len(valid_sirutas) if valid_sirutas else 0.0,
+    }
+
+
+
 def _standardise_diacritics(s: str) -> str:
     trans = str.maketrans({"ş": "ș", "Ş": "Ș", "ţ": "ț", "Ţ": "Ț"})
     return re.sub(r"\s+", " ", s.translate(trans)).strip()
@@ -238,6 +267,17 @@ def normalise_elections(settings: Settings, year: int | None = None) -> dict[str
             cands, races, terms, stations, m = _process_2024(
                 raw_dir, interim_dir, valid_sirutas, party_aliases[2024], prov, election_overrides
             )
+        uat_match = check_race_uat_matching(races, valid_sirutas)
+        m.update(uat_match)
+        logger.info(
+            "Year %d: %d/%d UATs matched (%.2f%%), %d unmatched races, %d missing UATs.",
+            yr,
+            uat_match["matched_count"],
+            len(valid_sirutas),
+            uat_match["match_rate"] * 100,
+            len(uat_match["unmatched_races"]),
+            len(uat_match["missing_uats"]),
+        )
         all_candidates.extend(cands)
         all_races.extend(races)
         all_terms.extend(terms)
@@ -571,6 +611,16 @@ def _process_2020(
                 else 0.0
             )
 
+        rerun_info = rerun_map.get(siruta)
+        if rerun_info and rerun_info.get("valid_votes_adjusted"):
+            v_reported = int(rerun_info["valid_votes_reported"])
+            v_adjusted = int(rerun_info["valid_votes"])
+            is_adj = True
+        else:
+            v_reported = deciding_valid
+            v_adjusted = deciding_valid
+            is_adj = False
+
         races_out.append(
             {
                 "year": 2020,
@@ -580,7 +630,9 @@ def _process_2020(
                 "is_uncontested": is_uncontested,
                 "registered_voters": deciding_reg,
                 "votes_cast": deciding_cast,
-                "valid_votes": deciding_valid,
+                "valid_votes_reported": v_reported,
+                "valid_votes": v_adjusted,
+                "valid_votes_adjusted": is_adj,
                 "n_candidates": len(deciding_sorted),
                 "winner_candidate_id": winner_cand_id,
                 "winner_vote_share": winner_share,
@@ -963,6 +1015,16 @@ def _process_2024(
                 else 0.0
             )
 
+        rerun_info = rerun_map.get(siruta)
+        if rerun_info and rerun_info.get("valid_votes_adjusted"):
+            v_reported = int(rerun_info["valid_votes_reported"])
+            v_adjusted = int(rerun_info["valid_votes"])
+            is_adj = True
+        else:
+            v_reported = deciding_valid
+            v_adjusted = deciding_valid
+            is_adj = False
+
         races_out.append(
             {
                 "year": 2024,
@@ -972,7 +1034,9 @@ def _process_2024(
                 "is_uncontested": is_uncontested,
                 "registered_voters": deciding_reg,
                 "votes_cast": deciding_cast,
-                "valid_votes": deciding_valid,
+                "valid_votes_reported": v_reported,
+                "valid_votes": v_adjusted,
+                "valid_votes_adjusted": is_adj,
                 "n_candidates": len(deciding_sorted),
                 "winner_candidate_id": winner_cand_id,
                 "winner_vote_share": winner_share,
@@ -1112,7 +1176,9 @@ def _write_parquet_tables(
             ("is_uncontested", pa.bool_()),
             ("registered_voters", pa.int64()),
             ("votes_cast", pa.int64()),
+            ("valid_votes_reported", pa.int64()),
             ("valid_votes", pa.int64()),
+            ("valid_votes_adjusted", pa.bool_()),
             ("n_candidates", pa.int64()),
             ("winner_candidate_id", pa.string()),
             ("winner_vote_share", pa.float64()),
