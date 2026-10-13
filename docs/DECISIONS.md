@@ -50,3 +50,8 @@ Decide before T009 on: extraction quality on the Romanian gold set, structured-o
 ## D010 — Timing indicators
 2026-10-12 · accepted
 Add timing indicators (distribution of contracting and spending over mayoral terms and EU programming periods; end-of-period concentration; pre-election spikes) as a later task, T014. The existing task order is unchanged. Reason: evidence that Romanian EU-funds spending is slow and concentrated at the end of programming periods.
+
+## D011 — Defer by-elections and vacancies
+2026-10-13 · accepted
+T003b and T003d are deferred and will be merged into one "term boundaries" task when T012 needs it. Official results files exist only for some partial elections (June 2021; none published for December 2025), no partial elections were held between mid-2021 and the 2024 elections despite dozens of vacancies, and the affected terms are a small share of about 6,400. Phase 1 (T005–T007) proceeds first.
+
