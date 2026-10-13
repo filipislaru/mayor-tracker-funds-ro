@@ -1,0 +1,1510 @@
+parties:
+  2020:
+  - party_raw: ALIANTA ELECTORALĂ PSD+ALDE PUI
+    party_normalised: ALIANTA ELECTORALĂ PSD+ALDE PUI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA "USR PLUS FDGR"
+    party_normalised: ALIANȚA "USR PLUS FDGR"
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ "ALIANȚA PENTRU BICAZ 2020"
+    party_normalised: ALIANȚA ELECTORALĂ "ALIANȚA PENTRU BICAZ 2020"
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ "ALIANȚA PENTRU PIATRA NEAMȚ 2020"
+    party_normalised: ALIANȚA ELECTORALĂ "ALIANȚA PENTRU PIATRA NEAMȚ 2020"
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ "ALIANȚA PENTRU ROMAN 2020"
+    party_normalised: ALIANȚA ELECTORALĂ "ALIANȚA PENTRU ROMAN 2020"
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ "ALIANȚA PENTRU ROZNOV 2020"
+    party_normalised: ALIANȚA ELECTORALĂ "ALIANȚA PENTRU ROZNOV 2020"
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ "ALIANȚA PENTRU TÂRGU NEAMȚ 2020"
+    party_normalised: ALIANȚA ELECTORALĂ "ALIANȚA PENTRU TÂRGU NEAMȚ 2020"
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ "PSD ALDE"
+    party_normalised: ALIANȚA ELECTORALĂ "PSD ALDE"
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ "PSD+ALDE"
+    party_normalised: ALIANȚA ELECTORALĂ "PSD+ALDE"
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ "PSD+ALDE+PRO"
+    party_normalised: ALIANȚA ELECTORALĂ "PSD+ALDE+PRO"
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ ADER-PPU (SOCIAL-LIBERAL)
+    party_normalised: ALIANȚA ELECTORALĂ ADER-PPU (SOCIAL-LIBERAL)
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ COALIȚIA PENTRU MARAMUREȘ CMM
+    party_normalised: ALIANȚA ELECTORALĂ COALIȚIA PENTRU MARAMUREȘ CMM
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ DL + ALDE"
+    party_normalised: ALIANȚA ELECTORALĂ DL + ALDE"
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ LOCALĂ PSD-ALDE
+    party_normalised: ALIANȚA ELECTORALĂ LOCALĂ PSD-ALDE
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ MIȘCAREA PATRIOȚILOR ROMÂNI (MPR)
+    party_normalised: ALIANȚA ELECTORALĂ MIȘCAREA PATRIOȚILOR ROMÂNI (MPR)
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ PNL PLUS DRĂCȘENEI
+    party_normalised: ALIANȚA ELECTORALĂ PNL PLUS DRĂCȘENEI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ PRO DOROBANȚI
+    party_normalised: ALIANȚA ELECTORALĂ PRO DOROBANȚI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ PSD+ALDE CÂRLOGANI
+    party_normalised: ALIANȚA ELECTORALĂ PSD+ALDE CÂRLOGANI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ PSD+ALDE MILCOV
+    party_normalised: ALIANȚA ELECTORALĂ PSD+ALDE MILCOV
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ PSD+ALDE SPRÂNCENATA
+    party_normalised: ALIANȚA ELECTORALĂ PSD+ALDE SPRÂNCENATA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ PSD+ALDE ȘOIMUȘ
+    party_normalised: ALIANȚA ELECTORALĂ PSD+ALDE ȘOIMUȘ
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ PSD+P.R. BALȘ
+    party_normalised: ALIANȚA ELECTORALĂ PSD+P.R. BALȘ
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ PSD-PPU (SOCIAL-LIBERAL)
+    party_normalised: ALIANȚA ELECTORALĂ PSD-PPU (SOCIAL-LIBERAL)
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA MAGHIARĂ DIN TRANSILVANIA
+    party_normalised: ALIANȚA MAGHIARĂ DIN TRANSILVANIA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA MAGHIARĂ DIN TRANSILVANIA - ERDÉLYI MAGYAR SZÖVETSÉG (AMT -
+      EMSZ)
+    party_normalised: ALIANȚA MAGHIARĂ DIN TRANSILVANIA - ERDÉLYI MAGYAR SZÖVETSÉG
+      (AMT - EMSZ)
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA MIȘCAREA PATRIOȚILOR ROMÂNI
+    party_normalised: ALIANȚA MIȘCAREA PATRIOȚILOR ROMÂNI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA NAȚIONAL ȚĂRĂNISTĂ
+    party_normalised: ALIANȚA NAȚIONAL ȚĂRĂNISTĂ
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PARTIDUL NAȚIONAL LIBERAL - UNIUNEA SALVAȚI ROMÂNIA - PARTIDUL
+      LIBERTATE, UNITATE ȘI SOLIDARITATE (PNL-USR-PLUS)
+    party_normalised: ALIANȚA PARTIDUL NAȚIONAL LIBERAL - UNIUNEA SALVAȚI ROMÂNIA
+      - PARTIDUL LIBERTATE, UNITATE ȘI SOLIDARITATE (PNL-USR-PLUS)
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PARTIDUL NAȚIONAL LIBERAL-BRĂILA NOUĂ (PNL-BRĂILA NOUĂ)
+    party_normalised: ALIANȚA PARTIDUL NAȚIONAL LIBERAL-BRĂILA NOUĂ (PNL-BRĂILA NOUĂ)
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU APOSTOLACHE
+    party_normalised: ALIANȚA PENTRU APOSTOLACHE
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU ARICEȘTII RAHTIVANI
+    party_normalised: ALIANȚA PENTRU ARICEȘTII RAHTIVANI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU ARICEȘTII ZELETIN
+    party_normalised: ALIANȚA PENTRU ARICEȘTII ZELETIN
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU BABA ANA
+    party_normalised: ALIANȚA PENTRU BABA ANA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU BAICOI
+    party_normalised: ALIANȚA PENTRU BAICOI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU BECLEAN
+    party_normalised: ALIANȚA PENTRU BECLEAN
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU BISTRIȚA BÂRGĂULUI
+    party_normalised: ALIANȚA PENTRU BISTRIȚA BÂRGĂULUI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU BISTRIȚA-NĂSĂUD
+    party_normalised: ALIANȚA PENTRU BISTRIȚA-NĂSĂUD
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU BOLDEȘTI SCAENI
+    party_normalised: ALIANȚA PENTRU BOLDEȘTI SCAENI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU BRANIȘTEA
+    party_normalised: ALIANȚA PENTRU BRANIȘTEA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU BUCOV
+    party_normalised: ALIANȚA PENTRU BUCOV
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU BUDACU DE JOS
+    party_normalised: ALIANȚA PENTRU BUDACU DE JOS
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU BUDEȘTI
+    party_normalised: ALIANȚA PENTRU BUDEȘTI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU CENEI
+    party_normalised: ALIANȚA PENTRU CENEI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU CEPTURA
+    party_normalised: ALIANȚA PENTRU CEPTURA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU CETATE
+    party_normalised: ALIANȚA PENTRU CETATE
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU CHIOCHIȘ
+    party_normalised: ALIANȚA PENTRU CHIOCHIȘ
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU CHIUZA
+    party_normalised: ALIANȚA PENTRU CHIUZA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU CICEU-GIURGEȘTI
+    party_normalised: ALIANȚA PENTRU CICEU-GIURGEȘTI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU CICEU-MIHĂIEȘTI
+    party_normalised: ALIANȚA PENTRU CICEU-MIHĂIEȘTI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU COCORĂȘTII MISLII
+    party_normalised: ALIANȚA PENTRU COCORĂȘTII MISLII
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU COȘBUC
+    party_normalised: ALIANȚA PENTRU COȘBUC
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU CĂIANU MIC
+    party_normalised: ALIANȚA PENTRU CĂIANU MIC
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU DETA
+    party_normalised: ALIANȚA PENTRU DETA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU DUMBRĂVIȚA
+    party_normalised: ALIANȚA PENTRU DUMBRĂVIȚA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU DUMITRA
+    party_normalised: ALIANȚA PENTRU DUMITRA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU DUMITRIȚA
+    party_normalised: ALIANȚA PENTRU DUMITRIȚA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU FELDRU
+    party_normalised: ALIANȚA PENTRU FELDRU
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU FILIPEȘTII DE PĂDURE
+    party_normalised: ALIANȚA PENTRU FILIPEȘTII DE PĂDURE
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU FLOREȘTI
+    party_normalised: ALIANȚA PENTRU FLOREȘTI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU FÂNTÂNELE
+    party_normalised: ALIANȚA PENTRU FÂNTÂNELE
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU GALAȚII BISTRIȚEI
+    party_normalised: ALIANȚA PENTRU GALAȚII BISTRIȚEI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU GURA VITIOAREI
+    party_normalised: ALIANȚA PENTRU GURA VITIOAREI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU ILVA MARE
+    party_normalised: ALIANȚA PENTRU ILVA MARE
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU ILVA MICĂ
+    party_normalised: ALIANȚA PENTRU ILVA MICĂ
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU JOSENII BÂRGĂULUI
+    party_normalised: ALIANȚA PENTRU JOSENII BÂRGĂULUI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU LECHINȚA
+    party_normalised: ALIANȚA PENTRU LECHINȚA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU LEȘU
+    party_normalised: ALIANȚA PENTRU LEȘU
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU LIEBLING
+    party_normalised: ALIANȚA PENTRU LIEBLING
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU LIVEZILE
+    party_normalised: ALIANȚA PENTRU LIVEZILE
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU LUNCA ILVEI
+    party_normalised: ALIANȚA PENTRU LUNCA ILVEI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU MAIERU
+    party_normalised: ALIANȚA PENTRU MAIERU
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU MATEI
+    party_normalised: ALIANȚA PENTRU MATEI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU MICEȘTII DE CÂMPIE
+    party_normalised: ALIANȚA PENTRU MICEȘTII DE CÂMPIE
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU MILAȘ
+    party_normalised: ALIANȚA PENTRU MILAȘ
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU MONOR
+    party_normalised: ALIANȚA PENTRU MONOR
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU MĂGURA ILVEI
+    party_normalised: ALIANȚA PENTRU MĂGURA ILVEI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU MĂGURENI
+    party_normalised: ALIANȚA PENTRU MĂGURENI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU MĂRIȘELU
+    party_normalised: ALIANȚA PENTRU MĂRIȘELU
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU NEGRILEȘTI
+    party_normalised: ALIANȚA PENTRU NEGRILEȘTI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU NIMIGEA
+    party_normalised: ALIANȚA PENTRU NIMIGEA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU NUȘENI
+    party_normalised: ALIANȚA PENTRU NUȘENI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU NĂSĂUD
+    party_normalised: ALIANȚA PENTRU NĂSĂUD
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU PARVA
+    party_normalised: ALIANȚA PENTRU PARVA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU PETRU RAREȘ
+    party_normalised: ALIANȚA PENTRU PETRU RAREȘ
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU PLOPENI
+    party_normalised: ALIANȚA PENTRU PLOPENI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU PODENII NOI
+    party_normalised: ALIANȚA PENTRU PODENII NOI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU POIANA ILVEI
+    party_normalised: ALIANȚA PENTRU POIANA ILVEI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU PRAHOVA
+    party_normalised: ALIANȚA PENTRU PRAHOVA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU PREDEAL SĂRARI
+    party_normalised: ALIANȚA PENTRU PREDEAL SĂRARI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU PRUNDU BÂRGĂULUI
+    party_normalised: ALIANȚA PENTRU PRUNDU BÂRGĂULUI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU REBRA
+    party_normalised: ALIANȚA PENTRU REBRA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU REBRIȘOARA
+    party_normalised: ALIANȚA PENTRU REBRIȘOARA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU RODNA
+    party_normalised: ALIANȚA PENTRU RODNA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU ROMULI
+    party_normalised: ALIANȚA PENTRU ROMULI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU RUNCU SALVEI
+    party_normalised: ALIANȚA PENTRU RUNCU SALVEI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU RÂFOV
+    party_normalised: ALIANȚA PENTRU RÂFOV
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU SALVA
+    party_normalised: ALIANȚA PENTRU SALVA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU SCORȚENI
+    party_normalised: ALIANȚA PENTRU SCORȚENI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU SILIVAȘU DE CÂMPIE
+    party_normalised: ALIANȚA PENTRU SILIVAȘU DE CÂMPIE
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU SPERMEZEU
+    party_normalised: ALIANȚA PENTRU SPERMEZEU
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU SÂNANDREI
+    party_normalised: ALIANȚA PENTRU SÂNANDREI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU SÎNGEORZ-BĂI
+    party_normalised: ALIANȚA PENTRU SÎNGEORZ-BĂI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU SÎNMIHAIU DE CÂMPIE
+    party_normalised: ALIANȚA PENTRU SÎNMIHAIU DE CÂMPIE
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU TALEA
+    party_normalised: ALIANȚA PENTRU TALEA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU TEACA
+    party_normalised: ALIANȚA PENTRU TEACA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU TELCIU
+    party_normalised: ALIANȚA PENTRU TELCIU
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU TIHA BÂRGĂULUI
+    party_normalised: ALIANȚA PENTRU TIHA BÂRGĂULUI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU TÂRLIȘUA
+    party_normalised: ALIANȚA PENTRU TÂRLIȘUA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU UNIREA ROMÂNILOR
+    party_normalised: ALIANȚA PENTRU UNIREA ROMÂNILOR
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU UNITATEA RROMILOR
+    party_normalised: ALIANȚA PENTRU UNITATEA RROMILOR
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU URIU
+    party_normalised: ALIANȚA PENTRU URIU
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU URMENIȘ
+    party_normalised: ALIANȚA PENTRU URMENIȘ
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU VĂLENII DE MUNTE
+    party_normalised: ALIANȚA PENTRU VĂLENII DE MUNTE
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU ZAGRA
+    party_normalised: ALIANȚA PENTRU ZAGRA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU ȘAG
+    party_normalised: ALIANȚA PENTRU ȘAG
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU ȘANȚ
+    party_normalised: ALIANȚA PENTRU ȘANȚ
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU ȘIEU
+    party_normalised: ALIANȚA PENTRU ȘIEU
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU ȘIEU-MĂGHERUȘ
+    party_normalised: ALIANȚA PENTRU ȘIEU-MĂGHERUȘ
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU ȘIEU-ODORHEI
+    party_normalised: ALIANȚA PENTRU ȘIEU-ODORHEI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU ȘIEUȚ
+    party_normalised: ALIANȚA PENTRU ȘIEUȚ
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU ȘINTEREAG
+    party_normalised: ALIANȚA PENTRU ȘINTEREAG
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU ȘTEFEȘTI
+    party_normalised: ALIANȚA PENTRU ȘTEFEȘTI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PNL USR PLUS
+    party_normalised: ALIANȚA PNL USR PLUS
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PNL-PMP
+    party_normalised: ALIANȚA PNL-PMP
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PNL-USR BUDEȘTI
+    party_normalised: ALIANȚA PNL-USR BUDEȘTI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PNL-USR GRĂDIȘTEA
+    party_normalised: ALIANȚA PNL-USR GRĂDIȘTEA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PNL-USR NANA
+    party_normalised: ALIANȚA PNL-USR NANA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PNL-USR OLTENIȚA
+    party_normalised: ALIANȚA PNL-USR OLTENIȚA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PNL-USR SĂRULEȘTI
+    party_normalised: ALIANȚA PNL-USR SĂRULEȘTI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PNL-USR VALEA ARGOVEI
+    party_normalised: ALIANȚA PNL-USR VALEA ARGOVEI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PNL-USR-PLUS
+    party_normalised: ALIANȚA PNL-USR-PLUS
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PRO BUCUREȘTI 2020
+    party_normalised: ALIANȚA PRO BUCUREȘTI 2020
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PRO STARCHIOJD
+    party_normalised: ALIANȚA PRO STARCHIOJD
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PRO URLAȚI
+    party_normalised: ALIANȚA PRO URLAȚI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PSD-PPU (sl)
+    party_normalised: ALIANȚA PSD-PPU (sl)
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PSD-PRO RÂMNICU SĂRAT
+    party_normalised: ALIANȚA PSD-PRO RÂMNICU SĂRAT
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA SOCIAL LIBERALĂ
+    party_normalised: ALIANȚA SOCIAL LIBERALĂ
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA SOCIAL UMANISTĂ
+    party_normalised: ALIANȚA SOCIAL UMANISTĂ
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA U.S.R. PLUS
+    party_normalised: ALIANȚA U.S.R. PLUS
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA UNIUNEA SALVAȚI ROMÂNIA PARTIDUL LIBERTATE UNITATE ȘI SOLIDARITATE
+      (ALIANȚA USR PLUS)
+    party_normalised: ALIANȚA UNIUNEA SALVAȚI ROMÂNIA PARTIDUL LIBERTATE UNITATE ȘI
+      SOLIDARITATE (ALIANȚA USR PLUS)
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA USR PENTRU MOLDOVA
+    party_normalised: ALIANȚA USR PENTRU MOLDOVA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA USR PLUS
+    party_normalised: ALIANȚA USR PLUS
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA USR PLUS BRĂILA
+    party_normalised: ALIANȚA USR PLUS BRĂILA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ÎMPREUNĂ PENTRU BOTOȘANI PARTIDUL VERDE-P.N.Ț.C.D.
+    party_normalised: ALIANȚA ÎMPREUNĂ PENTRU BOTOȘANI PARTIDUL VERDE-P.N.Ț.C.D.
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALINȚA PARTIDUL NAȚIONAL LIBERAL-UNIUNEA SALVAȚI ROMÂNIA-PARTIDUL LIBERTATE
+      UNITATE ȘI SOLIDARITATE (PNL-USR-PLUS)
+    party_normalised: ALINȚA PARTIDUL NAȚIONAL LIBERAL-UNIUNEA SALVAȚI ROMÂNIA-PARTIDUL
+      LIBERTATE UNITATE ȘI SOLIDARITATE (PNL-USR-PLUS)
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ASOCIAȚIA PARTIDA ROMILOR “PRO-EUROPA”
+    party_normalised: ASOCIAȚIA PARTIDA ROMILOR “PRO-EUROPA”
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: BLOCUL UNITĂȚII NAȚIONALE
+    party_normalised: BLOCUL UNITĂȚII NAȚIONALE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: COMUNITATEA RUȘILOR LIPOVENI DIN ROMÂNIA
+    party_normalised: COMUNITATEA RUȘILOR LIPOVENI DIN ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: FORUMUL DEMOCRAT AL GERMANILOR DIN ROMÂNIA
+    party_normalised: FORUMUL DEMOCRAT AL GERMANILOR DIN ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: MIȘCAREA PATRIOȚILOR ROMÂNI
+    party_normalised: MIȘCAREA PATRIOȚILOR ROMÂNI
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: MIȘCAREA PATRIOȚILOR ROMÂNI (MPR)
+    party_normalised: MIȘCAREA PATRIOȚILOR ROMÂNI (MPR)
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: MIȘCAREA PATRIOȚILOR ROMÂNI - MPR
+    party_normalised: MIȘCAREA PATRIOȚILOR ROMÂNI - MPR
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PACT PENTRU GALAȚI
+    party_normalised: PACT PENTRU GALAȚI
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDA ROMILOR PRO EUROPA
+    party_normalised: PARTIDA ROMILOR PRO EUROPA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ACȚIUNEA NAȚIONALĂ ALBA
+    party_normalised: PARTIDUL ACȚIUNEA NAȚIONALĂ ALBA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ADER LA DEMOCRAŢIE, EDUCAŢIE ŞI RECONSTRUCŢIE
+    party_normalised: PARTIDUL ADER LA DEMOCRAȚIE, EDUCAȚIE ȘI RECONSTRUCȚIE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL AGRICULTORILOR DIN ROMÂNIA
+    party_normalised: PARTIDUL AGRICULTORILOR DIN ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ALIANTA PENTRU EDUCATIE SI REFORMA
+    party_normalised: PARTIDUL ALIANTA PENTRU EDUCATIE SI REFORMA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ALIANŢA LIBERALILOR ŞI DEMOCRAŢILOR – ALDE
+    party_normalised: PARTIDUL ALIANȚA LIBERALILOR ȘI DEMOCRAȚILOR – ALDE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ALIANȚA CREȘTIN DEMOCRATĂ
+    party_normalised: PARTIDUL ALIANȚA CREȘTIN DEMOCRATĂ
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ALIANȚA CREȘTINĂ ADEVĂRATĂ ROMÂNĂ
+    party_normalised: PARTIDUL ALIANȚA CREȘTINĂ ADEVĂRATĂ ROMÂNĂ
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ALTERNATIVA DREAPTĂ
+    party_normalised: PARTIDUL ALTERNATIVA DREAPTĂ
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ALTERNATIVA PENTRU DEMNITATE NATIONALĂ
+    party_normalised: PARTIDUL ALTERNATIVA PENTRU DEMNITATE NATIONALĂ
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ARĂDENILOR
+    party_normalised: PARTIDUL ARĂDENILOR
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL BANATUL
+    party_normalised: PARTIDUL BANATUL
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL BUCUREȘTI 2020
+    party_normalised: PARTIDUL BUCUREȘTI 2020
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL BĂCĂUANILOR
+    party_normalised: PARTIDUL BĂCĂUANILOR
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL CIVIC MAGHIAR
+    party_normalised: PARTIDUL CIVIC MAGHIAR
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL COMUNIȘTILOR
+    party_normalised: PARTIDUL COMUNIȘTILOR
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL DREAPTA LIBERALĂ
+    party_normalised: PARTIDUL DREAPTA LIBERALĂ
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL DREPTĂȚII
+    party_normalised: PARTIDUL DREPTĂȚII
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ECOLOGIST ROMÂN
+    party_normalised: PARTIDUL ECOLOGIST ROMÂN
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL FORTA NATIONALA
+    party_normalised: PARTIDUL FORTA NATIONALA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL FORȚA IDENTITĂȚII NAȚIONALE
+    party_normalised: PARTIDUL FORȚA IDENTITĂȚII NAȚIONALE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL GORJENILOR
+    party_normalised: PARTIDUL GORJENILOR
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL IALOMIȚENILOR
+    party_normalised: PARTIDUL IALOMIȚENILOR
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL INIȚIATIVA PĂTÂRLAGELE
+    party_normalised: PARTIDUL INIȚIATIVA PĂTÂRLAGELE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL LIBERTATE, UNITATE ȘI SOLIDARITATE
+    party_normalised: PARTIDUL LIBERTATE, UNITATE ȘI SOLIDARITATE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL LIGA ORGANIZATA A REGIUNILOR DREPTE
+    party_normalised: PARTIDUL LIGA ORGANIZATA A REGIUNILOR DREPTE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL MIȘCAREA POPULARĂ
+    party_normalised: PARTIDUL MIȘCAREA POPULARĂ
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL NAȚIONAL LIBERAL
+    party_normalised: PARTIDUL NAȚIONAL LIBERAL
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL NAȚIONAL ROMÂN
+    party_normalised: PARTIDUL NAȚIONAL ROMÂN
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL NAȚIONAL ȚĂRĂNESC CREȘTIN DEMOCRAT
+    party_normalised: PARTIDUL NAȚIONAL ȚĂRĂNESC CREȘTIN DEMOCRAT
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL NAȚIONAL ȚĂRĂNESC MANIU MIHALACHE
+    party_normalised: PARTIDUL NAȚIONAL ȚĂRĂNESC MANIU MIHALACHE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL NAȚIUNEA ROMÂNĂ
+    party_normalised: PARTIDUL NAȚIUNEA ROMÂNĂ
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL NEAMUL ROMÂNESC
+    party_normalised: PARTIDUL NEAMUL ROMÂNESC
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL NOUA DREAPTĂ
+    party_normalised: PARTIDUL NOUA DREAPTĂ
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL NOUA ROMÂNIE
+    party_normalised: PARTIDUL NOUA ROMÂNIE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL OAMENILOR CREDINCIOȘI
+    party_normalised: PARTIDUL OAMENILOR CREDINCIOȘI
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL OAMENILOR LIBERI
+    party_normalised: PARTIDUL OAMENILOR LIBERI
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL PHRALIPE AL ROMILOR
+    party_normalised: PARTIDUL PHRALIPE AL ROMILOR
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL POLITIC INIȚIATIVA OTOPENIUL NOSTRU
+    party_normalised: PARTIDUL POLITIC INIȚIATIVA OTOPENIUL NOSTRU
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL POPULAR MAGHIAR DIN TRANSILVANIA
+    party_normalised: PARTIDUL POPULAR MAGHIAR DIN TRANSILVANIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL PRAHOVA IN ACȚIUNE
+    party_normalised: PARTIDUL PRAHOVA IN ACȚIUNE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL PRO ROMÂNIA
+    party_normalised: PARTIDUL PRO ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL PUTERII UMANISTE (SOCIAL-LIBERAL)
+    party_normalised: PARTIDUL PUTERII UMANISTE (SOCIAL-LIBERAL)
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL RE:START ROMÂNIA
+    party_normalised: PARTIDUL RE:START ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL REPUBLICAN DIN ROMÂNIA
+    party_normalised: PARTIDUL REPUBLICAN DIN ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL REZIST
+    party_normalised: PARTIDUL REZIST
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ROMÂNIA MARE
+    party_normalised: PARTIDUL ROMÂNIA MARE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ROMÂNIA NOASTRĂ
+    party_normalised: PARTIDUL ROMÂNIA NOASTRĂ
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ROMÂNIEI EUROPENE
+    party_normalised: PARTIDUL ROMÂNIEI EUROPENE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL SOCIAL DEMOCRAT
+    party_normalised: PARTIDUL SOCIAL DEMOCRAT
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL SOCIAL DEMOCRAT AL MUNCITORILOR
+    party_normalised: PARTIDUL SOCIAL DEMOCRAT AL MUNCITORILOR
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL SOCIAL DEMOCRAT INDEPENDENT
+    party_normalised: PARTIDUL SOCIAL DEMOCRAT INDEPENDENT
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL SOCIAL DEMOCRAT ȘI PARTIDUL ALIANȚA LIBERALILOR ȘI DEMOCRAȚILOR
+      HIDIȘELU DE SUS-PSD-ALDE
+    party_normalised: PARTIDUL SOCIAL DEMOCRAT ȘI PARTIDUL ALIANȚA LIBERALILOR ȘI
+      DEMOCRAȚILOR HIDIȘELU DE SUS-PSD-ALDE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL SOCIAL DEMOCRAT ȘI PARTIDUL ALIANȚA LIBERALILOR ȘI DEMOCRAȚILOR
+      SOVEJA (PSD-ALDE)
+    party_normalised: PARTIDUL SOCIAL DEMOCRAT ȘI PARTIDUL ALIANȚA LIBERALILOR ȘI
+      DEMOCRAȚILOR SOVEJA (PSD-ALDE)
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL SOCIAL POPULAR -ROMÂN
+    party_normalised: PARTIDUL SOCIAL POPULAR -ROMÂN
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL SOCIALIST ROMÂN
+    party_normalised: PARTIDUL SOCIALIST ROMÂN
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL SPERANȚEI ȘI VOINȚEI - REMÉNYSÉG ÉS AKARAT PÁRTJA
+    party_normalised: PARTIDUL SPERANȚEI ȘI VOINȚEI - REMÉNYSÉG ÉS AKARAT PÁRTJA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL UNITĂȚII SOCIALE DIN ROMÂNIA
+    party_normalised: PARTIDUL UNITĂȚII SOCIALE DIN ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL UNIUNEA INDEPENDENTA PENTRU SIGHISOARA
+    party_normalised: PARTIDUL UNIUNEA INDEPENDENTA PENTRU SIGHISOARA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL UNIUNEA INDEPENDENTA PENTRU TECUCI
+    party_normalised: PARTIDUL UNIUNEA INDEPENDENTA PENTRU TECUCI
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL VERDE
+    party_normalised: PARTIDUL VERDE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ÎMPREUNĂ PENTRU MOLDOVA
+    party_normalised: PARTIDUL ÎMPREUNĂ PENTRU MOLDOVA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PLATFORMA SOCIAL-LIBERAL CREȘTINĂ
+    party_normalised: PLATFORMA SOCIAL-LIBERAL CREȘTINĂ
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PRO CARAȘ-SEVERIN
+    party_normalised: PRO CARAȘ-SEVERIN
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PRO ROMÂNIA-ALDE
+    party_normalised: PRO ROMÂNIA-ALDE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PSD+ALDE+PNȚCD MANGALIA
+    party_normalised: PSD+ALDE+PNȚCD MANGALIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PSD-PNȚCD
+    party_normalised: PSD-PNȚCD
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PSD-PRO ROMÂNIA
+    party_normalised: PSD-PRO ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: UNIUNEA BULGARĂ DIN BANAT- ROMÂNIA
+    party_normalised: UNIUNEA BULGARĂ DIN BANAT- ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: UNIUNEA CREȘTIN DEMOCRATĂ DLN ROMÂNIA
+    party_normalised: UNIUNEA CREȘTIN DEMOCRATĂ DLN ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: UNIUNEA CROAȚILOR DIN ROMÂNIA
+    party_normalised: UNIUNEA CROAȚILOR DIN ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: UNIUNEA DEMOCRATICĂ A SLOVACILOR ȘI CEHILOR DIN ROMÂNIA
+    party_normalised: UNIUNEA DEMOCRATICĂ A SLOVACILOR ȘI CEHILOR DIN ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: UNIUNEA DEMOCRATĂ MAGHIARĂ DIN ROMÂNIA
+    party_normalised: UNIUNEA DEMOCRATĂ MAGHIARĂ DIN ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: UNIUNEA ELENĂ DIN ROMÂNIA
+    party_normalised: UNIUNEA ELENĂ DIN ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: UNIUNEA NAȚIONALĂ PENTRU PROGRESUL ROMÂNIEI
+    party_normalised: UNIUNEA NAȚIONALĂ PENTRU PROGRESUL ROMÂNIEI
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: UNIUNEA PENTRU BUCOVINA
+    party_normalised: UNIUNEA PENTRU BUCOVINA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: UNIUNEA SALVAȚI ROMÂNIA
+    party_normalised: UNIUNEA SALVAȚI ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: UNIUNEA SÂRBILOR DIN ROMÂNIA
+    party_normalised: UNIUNEA SÂRBILOR DIN ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: UNIUNEA UCRAINENILOR DIN ROMÂNIA
+    party_normalised: UNIUNEA UCRAINENILOR DIN ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  2024:
+  - party_raw: ACȚIUNEA CONSERVATORILOR ROMÂNI
+    party_normalised: ACȚIUNEA CONSERVATORILOR ROMÂNI
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: ALIANȚA DREAPTA UNITĂ USR - FORȚA DREPTEI
+    party_normalised: ALIANȚA DREAPTA UNITĂ USR - FORȚA DREPTEI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA DREAPTA UNITĂ USR - PMP
+    party_normalised: ALIANȚA DREAPTA UNITĂ USR - PMP
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA DREAPTA UNITĂ USR - PMP - FORȚA DREPTEI
+    party_normalised: ALIANȚA DREAPTA UNITĂ USR - PMP - FORȚA DREPTEI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ PARTIDUL SOCIAL DEMOCRAT + PARTIDUL VERDE
+    party_normalised: ALIANȚA ELECTORALĂ PARTIDUL SOCIAL DEMOCRAT + PARTIDUL VERDE
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ PNL - PUSL
+    party_normalised: ALIANȚA ELECTORALĂ PNL - PUSL
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ PSD PNL
+    party_normalised: ALIANȚA ELECTORALĂ PSD PNL
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ PSD PRO ROMÂNIA
+    party_normalised: ALIANȚA ELECTORALĂ PSD PRO ROMÂNIA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ PSD-PUSL
+    party_normalised: ALIANȚA ELECTORALĂ PSD-PUSL
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ELECTORALĂ UIPS - FORȚA DREPTEI
+    party_normalised: ALIANȚA ELECTORALĂ UIPS - FORȚA DREPTEI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA ETOCRATĂ PENTRU REFORMĂ
+    party_normalised: ALIANȚA ETOCRATĂ PENTRU REFORMĂ
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA MAGHIARĂ DIN TRANSILVANIA - ERDÉLYI MAGYAR SZÖVETSÉG
+    party_normalised: ALIANȚA MAGHIARĂ DIN TRANSILVANIA - ERDÉLYI MAGYAR SZÖVETSÉG
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA NAȚIONAL CREȘTINĂ
+    party_normalised: ALIANȚA NAȚIONAL CREȘTINĂ
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA NAȚIONAL ȚĂRĂNISTĂ
+    party_normalised: ALIANȚA NAȚIONAL ȚĂRĂNISTĂ
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA NOI SUNTEM MANGALIA
+    party_normalised: ALIANȚA NOI SUNTEM MANGALIA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU AGIGEA
+    party_normalised: ALIANȚA PENTRU AGIGEA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU MEDGIDIA
+    party_normalised: ALIANȚA PENTRU MEDGIDIA
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU UNIREA ROMÂNILOR
+    party_normalised: ALIANȚA PENTRU UNIREA ROMÂNILOR
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU ÎNTORSURA BUZĂULUI - USR PNL
+    party_normalised: ALIANȚA PENTRU ÎNTORSURA BUZĂULUI - USR PNL
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PENTRU ȘAG
+    party_normalised: ALIANȚA PENTRU ȘAG
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA PMP - FORȚA DREPTEI
+    party_normalised: ALIANȚA PMP - FORȚA DREPTEI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA TIMIȘOARA UNITĂ USR - PMP - FORȚA DREPTEI - UDMR
+    party_normalised: ALIANȚA TIMIȘOARA UNITĂ USR - PMP - FORȚA DREPTEI - UDMR
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA UNIȚI PENTRU BRAȘOV
+    party_normalised: ALIANȚA UNIȚI PENTRU BRAȘOV
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA UNIȚI PENTRU FLOREȘTI USR + ARI
+    party_normalised: ALIANȚA UNIȚI PENTRU FLOREȘTI USR + ARI
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ALIANȚA USR - SENS
+    party_normalised: ALIANȚA USR - SENS
+    is_alliance: true
+    abbreviation: ''
+    members: []
+  - party_raw: ASOCIAȚIA PARTIDA ROMILOR "PRO-EUROPA"
+    party_normalised: ASOCIAȚIA PARTIDA ROMILOR "PRO-EUROPA"
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: BLOCUL SUVERANIST ROMÂN
+    party_normalised: BLOCUL SUVERANIST ROMÂN
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: COMUNITATEA RUȘILOR LIPOVENI DIN ROMÂNIA
+    party_normalised: COMUNITATEA RUȘILOR LIPOVENI DIN ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: DREPTATE ȘI RESPECT ÎN EUROPA PENTRU TOȚI
+    party_normalised: DREPTATE ȘI RESPECT ÎN EUROPA PENTRU TOȚI
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: FORUMUL DEMOCRAT AL GERMANILOR DIN ROMÂNIA
+    party_normalised: FORUMUL DEMOCRAT AL GERMANILOR DIN ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: FORȚA CIVICĂ MAGHIARĂ - MAGYAR POLGÁRI ERŐ
+    party_normalised: FORȚA CIVICĂ MAGHIARĂ - MAGYAR POLGÁRI ERŐ
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: FORȚA DREPTEI
+    party_normalised: FORȚA DREPTEI
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: GRUPUL DE ACŢIUNE LOCALĂ BERCENI
+    party_normalised: GRUPUL DE ACȚIUNE LOCALĂ BERCENI
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: INDEPENDENȚII COMUNEI MOȘNIȚA
+    party_normalised: INDEPENDENȚII COMUNEI MOȘNIȚA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: MIŞCAREA PENTRU COMUNĂ - MOZGALOM A KŐZSÉGÉRT
+    party_normalised: MIȘCAREA PENTRU COMUNĂ - MOZGALOM A KŐZSÉGÉRT
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: NAȚIUNE OAMENI ÎMPREUNĂ
+    party_normalised: NAȚIUNE OAMENI ÎMPREUNĂ
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PACT PENTRU GALAȚI
+    party_normalised: PACT PENTRU GALAȚI
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ACUM
+    party_normalised: PARTIDUL ACUM
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ADEVĂR, DEMOCRAȚIE, EDUCAȚIE, RECONSTRUCȚIE
+    party_normalised: PARTIDUL ADEVĂR, DEMOCRAȚIE, EDUCAȚIE, RECONSTRUCȚIE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ALIANȚA RENAȘTEREA NAȚIONALĂ
+    party_normalised: PARTIDUL ALIANȚA RENAȘTEREA NAȚIONALĂ
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ALTERNATIVA DREAPTĂ
+    party_normalised: PARTIDUL ALTERNATIVA DREAPTĂ
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ALTERNATIVA PENTRU DEMNITATE NATIONALĂ
+    party_normalised: PARTIDUL ALTERNATIVA PENTRU DEMNITATE NATIONALĂ
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL CONSERVATOR DEMOCRAT
+    party_normalised: PARTIDUL CONSERVATOR DEMOCRAT
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL DACISMULUI AUTONOM CONSERVATOR
+    party_normalised: PARTIDUL DACISMULUI AUTONOM CONSERVATOR
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL DEMOCRAȚIEI ȘI SOLIDARITAȚII-DEMOS
+    party_normalised: PARTIDUL DEMOCRAȚIEI ȘI SOLIDARITAȚII-DEMOS
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ECOLOGIST ROMÂN
+    party_normalised: PARTIDUL ECOLOGIST ROMÂN
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL IALOMIȚENILOR
+    party_normalised: PARTIDUL IALOMIȚENILOR
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL LEGE EDUCAȚIE UNITATE
+    party_normalised: PARTIDUL LEGE EDUCAȚIE UNITATE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL LIGA ACȚIUNII NAȚIONALE
+    party_normalised: PARTIDUL LIGA ACȚIUNII NAȚIONALE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL MIȘCAREA POPULARĂ
+    party_normalised: PARTIDUL MIȘCAREA POPULARĂ
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL MIȘCAREA ROMÂNIA SUVERANĂ
+    party_normalised: PARTIDUL MIȘCAREA ROMÂNIA SUVERANĂ
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL NAȚIONAL CONSERVATOR ROMÂN
+    party_normalised: PARTIDUL NAȚIONAL CONSERVATOR ROMÂN
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL NAȚIONAL DE CENTRU
+    party_normalised: PARTIDUL NAȚIONAL DE CENTRU
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL NAȚIONAL LIBERAL
+    party_normalised: PARTIDUL NAȚIONAL LIBERAL
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL NAȚIONAL VATRA ROMÂNEASCĂ
+    party_normalised: PARTIDUL NAȚIONAL VATRA ROMÂNEASCĂ
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL NAȚIONAL ȚĂRĂNESC MANIU-MIHALACHE
+    party_normalised: PARTIDUL NAȚIONAL ȚĂRĂNESC MANIU-MIHALACHE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL NEAMUL ROMÂNESC
+    party_normalised: PARTIDUL NEAMUL ROMÂNESC
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL NOUA DREAPTĂ
+    party_normalised: PARTIDUL NOUA DREAPTĂ
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL OAMENILOR CREDINCIOȘI
+    party_normalised: PARTIDUL OAMENILOR CREDINCIOȘI
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL OAMENILOR LIBERI
+    party_normalised: PARTIDUL OAMENILOR LIBERI
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL OAMENILOR TINERI
+    party_normalised: PARTIDUL OAMENILOR TINERI
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL OLTENILOR
+    party_normalised: PARTIDUL OLTENILOR
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL PATRIOȚII POPORULUI ROMÂN
+    party_normalised: PARTIDUL PATRIOȚII POPORULUI ROMÂN
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL PATRIOȚILOR
+    party_normalised: PARTIDUL PATRIOȚILOR
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL PATRIOȚILOR QANON
+    party_normalised: PARTIDUL PATRIOȚILOR QANON
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL PENTRU ODORHEIU SECUIESC
+    party_normalised: PARTIDUL PENTRU ODORHEIU SECUIESC
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL PHRALIPE AL ROMILOR
+    party_normalised: PARTIDUL PHRALIPE AL ROMILOR
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL POLUL SUVERANIST
+    party_normalised: PARTIDUL POLUL SUVERANIST
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL PRO ROMÂNIA
+    party_normalised: PARTIDUL PRO ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL PROGRESIST
+    party_normalised: PARTIDUL PROGRESIST
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL REDUTA-RESPECT,EDUCAȚIE, DEMNITATE, UNITATE, TRADIȚIE, ADEVĂR
+    party_normalised: PARTIDUL REDUTA-RESPECT,EDUCAȚIE, DEMNITATE, UNITATE, TRADIȚIE,
+      ADEVĂR
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL REÎNNOIM PROIECTUL EUROPEAN AL ROMÂNIEI
+    party_normalised: PARTIDUL REÎNNOIM PROIECTUL EUROPEAN AL ROMÂNIEI
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ROMÂNI PENTRU ROMÂNIA
+    party_normalised: PARTIDUL ROMÂNI PENTRU ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ROMÂNIA - ECHITATE, COMUNITATE, ONESTITATE
+    party_normalised: PARTIDUL ROMÂNIA - ECHITATE, COMUNITATE, ONESTITATE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ROMÂNIA MARE
+    party_normalised: PARTIDUL ROMÂNIA MARE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ROMÂNIA NOASTRĂ
+    party_normalised: PARTIDUL ROMÂNIA NOASTRĂ
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ROMÂNIA PUTERNICĂ
+    party_normalised: PARTIDUL ROMÂNIA PUTERNICĂ
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL ROMÂNIA ÎN ACȚIUNE
+    party_normalised: PARTIDUL ROMÂNIA ÎN ACȚIUNE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL S.O.S. ROMÂNIA
+    party_normalised: PARTIDUL S.O.S. ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL SATULUI ROMÂNESC
+    party_normalised: PARTIDUL SATULUI ROMÂNESC
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL SOCIAL DEMOCRAT
+    party_normalised: PARTIDUL SOCIAL DEMOCRAT
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL SOCIAL DEMOCRAT UNIT
+    party_normalised: PARTIDUL SOCIAL DEMOCRAT UNIT
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL SOCIALIST ROMÂN
+    party_normalised: PARTIDUL SOCIALIST ROMÂN
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL SOCIETĂȚII IEȘENE
+    party_normalised: PARTIDUL SOCIETĂȚII IEȘENE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL SĂNĂTATE EDUCAŢIE NATURĂ SUSTENABILITATE
+    party_normalised: PARTIDUL SĂNĂTATE EDUCAȚIE NATURĂ SUSTENABILITATE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL UMANIST SOCIAL LIBERAL
+    party_normalised: PARTIDUL UMANIST SOCIAL LIBERAL
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL VERDE
+    party_normalised: PARTIDUL VERDE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL VERTICALA NOUĂ
+    party_normalised: PARTIDUL VERTICALA NOUĂ
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL VIITORUL ȚĂRII FĂGĂRAȘULUI
+    party_normalised: PARTIDUL VIITORUL ȚĂRII FĂGĂRAȘULUI
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: PARTIDUL VOLT ROMANIA
+    party_normalised: PARTIDUL VOLT ROMANIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: ROMÂNIA SOCIALISTĂ
+    party_normalised: ROMÂNIA SOCIALISTĂ
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: UNIUNEA BULGARĂ DIN BANAT- ROMÂNIA
+    party_normalised: UNIUNEA BULGARĂ DIN BANAT- ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: UNIUNEA CREȘTIN DEMOCRATĂ DIN ROMÂNIA
+    party_normalised: UNIUNEA CREȘTIN DEMOCRATĂ DIN ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: UNIUNEA CROAȚILOR DIN ROMÂNIA
+    party_normalised: UNIUNEA CROAȚILOR DIN ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: UNIUNEA DEMOCRATICĂ A SLOVACILOR ȘI CEHILOR DIN ROMÂNIA
+    party_normalised: UNIUNEA DEMOCRATICĂ A SLOVACILOR ȘI CEHILOR DIN ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: UNIUNEA DEMOCRATĂ MAGHIARĂ DIN ROMÂNIA
+    party_normalised: UNIUNEA DEMOCRATĂ MAGHIARĂ DIN ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: UNIUNEA NAȚIUNII ROMÂNE
+    party_normalised: UNIUNEA NAȚIUNII ROMÂNE
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: UNIUNEA SALVAȚI ROMÂNIA
+    party_normalised: UNIUNEA SALVAȚI ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+  - party_raw: UNIUNEA UCRAINENILOR DIN ROMÂNIA
+    party_normalised: UNIUNEA UCRAINENILOR DIN ROMÂNIA
+    is_alliance: false
+    abbreviation: ''
+unmapped: []

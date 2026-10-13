@@ -59,3 +59,9 @@ def test_init_data_creates_folders_idempotently(cli_env: Path) -> None:
     assert second.exit_code == 0
     assert "created" not in second.output
     assert second.output.count("exists") == 5
+
+
+def test_normalise_elections_help() -> None:
+    result = runner.invoke(app, ["normalise", "elections", "--help"])
+    assert result.exit_code == 0
+    assert "Normalise mayoral election results" in result.output
