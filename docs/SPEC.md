@@ -35,7 +35,7 @@ its SIRUTA code) for one term of office.
   a verified record.
 - **Claim accuracy**: share of claimed achievements linked to an independent
   record.
-- **Funds secured** per capita, by source.
+- **Funds secured** per capita, by source, shown in delivery stages: contracted, received and completed (D012). Contracted amounts are never presented as delivered.
 - **Procurement integrity risk**: share of single-bid contracts and other
   documented red flags.
 - **Timing** (planned, task T014): how contracting and spending are distributed over each mayor's term and each EU programming period, including the share concentrated in the final months of a period and spikes before elections.

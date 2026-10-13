@@ -20,9 +20,10 @@ Status: `draft` → `ready` → `in progress` → `in review` → `done`
 
 | ID | Task | Depends on | Status |
 |---|---|---|---|
-| T005 | Ingest Kohesio (Romania) and match beneficiaries to UATs | T002 | in review |
-| T006 | Ingest EU-FAR absorption dataset and local budget execution | T002 | draft |
-| T007 | Ingest OpenTender Romania; contracts by contracting authority → UAT | T002 | draft |
+| T005 | Ingest Kohesio (Romania) and match beneficiaries to UATs | T002 | done |
+| T005b | Carried-over projects: SMIS codes present in both the 2014–2020 and 2021–2027 Kohesio files, per UAT | T005 | draft |
+| T006 | Local budget execution: EU funds received per UAT (EU-FAR cross-check deferred) | T002 | draft |
+| T007 | Ingest OpenTender Romania; contracts by contracting authority → UAT (also check whether subcontracting is recorded) | T002 | draft |
 
 ## Phase 2 — Documents (pilot county)
 
@@ -46,4 +47,5 @@ Status: `draft` → `ready` → `in progress` → `in review` → `done`
 | ID | Task | Depends on | Status |
 |---|---|---|---|
 | P01 | Probe: access to tender documentation and TED notice text | T001a | done |
+| P03 | Probe: MIPE datasets of signed 2014–2020 contracts by county, with implementation status | T005 | draft |
 

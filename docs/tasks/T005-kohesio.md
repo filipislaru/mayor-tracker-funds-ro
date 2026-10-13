@@ -1,6 +1,6 @@
 # T005 — Kohesio: EU cohesion projects in Romania, matched to UATs
 
-Status: in review
+Status: done
 Depends on: T002
 Branch: task/T005-kohesio
 

@@ -55,3 +55,8 @@ Add timing indicators (distribution of contracting and spending over mayoral ter
 2026-10-13 · accepted
 T003b and T003d are deferred and will be merged into one "term boundaries" task when T012 needs it. Official results files exist only for some partial elections (June 2021; none published for December 2025), no partial elections were held between mid-2021 and the 2024 elections despite dozens of vacancies, and the affected terms are a small share of about 6,400. Phase 1 (T005–T007) proceeds first.
 
+## D012 — Delivery measured in stages
+2026-10-13 · accepted
+EU funding is shown in three stages: contracted (Kohesio and contract data), received (local budget execution) and completed (end dates, projects carried over between periods, later satellite checks). Contracted amounts are never reported as delivered or absorbed. Reason: programme-level over-contracting (e.g. 168% on POIM 2014–2020) means contracted values overstate delivery.
+
+
