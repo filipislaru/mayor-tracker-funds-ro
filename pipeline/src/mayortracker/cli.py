@@ -138,6 +138,20 @@ def ingest_lau_boundaries_cmd() -> None:
     )
 
 
+@ingest_app.command("kohesio")
+def ingest_kohesio_cmd() -> None:
+    """Download official Kohesio datasets for Romania (projects, beneficiaries, NUTS)."""
+    from mayortracker.ingest.kohesio import ingest_kohesio
+
+    settings = load_settings()
+    entries = ingest_kohesio(settings)
+    for entry in entries:
+        typer.echo(
+            f"Downloaded {entry.filename} ({entry.bytes} bytes, sha256={entry.sha256[:8]}...)"
+        )
+
+
+
 @ingest_app.command("register-file")
 def register_file_cmd(
     path: Annotated[
