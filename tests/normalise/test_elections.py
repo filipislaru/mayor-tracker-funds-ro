@@ -278,14 +278,14 @@ def test_tied_race_runoff_and_deciding_totals() -> None:
         decided_in_round=2,
         is_uncontested=False,
         registered_voters=1500,  # Round 2 registered
-        votes_cast=900,         # Round 2 cast
-        valid_votes=850,        # Round 2 valid
+        votes_cast=900,  # Round 2 cast
+        valid_votes=850,  # Round 2 valid
         n_candidates=2,
         winner_candidate_id="2024-900004-r2-1",
         winner_vote_share=52.94,
         runner_up_vote_share=47.06,
-        round1_margin_pp=0.0,   # Tied in round 1
-        margin_pp=5.88,         # Deciding margin in round 2
+        round1_margin_pp=0.0,  # Tied in round 1
+        margin_pp=5.88,  # Deciding margin in round 2
         is_repeated_or_annulled=False,
         source_id="aep_local",
         source_url="https://example.com/test",
@@ -369,9 +369,7 @@ def test_parquet_table_writer(tmp_path: Path) -> None:
         "raw_sha256": "a" * 64,
     }
 
-    _write_parquet_tables(
-        tmp_path, [cand], [race], [term], [station], [2024]
-    )
+    _write_parquet_tables(tmp_path, [cand], [race], [term], [station], [2024])
 
     import pyarrow.parquet as pq
 
@@ -383,3 +381,46 @@ def test_parquet_table_writer(tmp_path: Path) -> None:
     races_t = pq.read_table(tmp_path / "mayor_races.parquet")
     assert races_t.schema.field("election_date").type == pa.date32()
     assert races_t.num_rows == 1
+
+
+def test_load_election_overrides(tmp_path: Path) -> None:
+    from mayortracker.normalise.elections import load_election_overrides
+
+    cfg_file = tmp_path / "election_overrides.yaml"
+    cfg_file.write_text(
+        """
+default_dates:
+  2020:
+    round_1: 2020-09-27
+    round_2: 2020-10-11
+  2024:
+    round_1: 2024-06-09
+    round_2: 2024-06-23
+
+rerun_races:
+  2020:
+    - siruta: 900001
+      name: "TEST Comuna Rerun"
+      county: "TEST County"
+      election_date: 2021-01-24
+      is_repeated_or_annulled: true
+      evidence: "TEST evidence for rerun"
+
+siruta_mappings:
+  2020:
+    900002:
+      siruta: 900003
+      name: "TEST Comuna Reassigned"
+      county: "TEST County"
+      evidence: "TEST evidence for code remapping"
+""",
+        encoding="utf-8",
+    )
+
+    overrides = load_election_overrides(cfg_file)
+    assert overrides["default_dates"][2020]["round_1"] == date(2020, 9, 27)
+    assert overrides["default_dates"][2024]["round_2"] == date(2024, 6, 23)
+    assert 900001 in overrides["rerun_races"][2020]
+    assert overrides["rerun_races"][2020][900001]["election_date"] == date(2021, 1, 24)
+    assert overrides["rerun_races"][2020][900001]["is_repeated_or_annulled"] is True
+    assert overrides["siruta_mappings"][2020][900002] == 900003

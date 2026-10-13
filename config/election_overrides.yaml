@@ -1,0 +1,36 @@
+# Election overrides and rerun race metadata.
+# Used by the normalisation pipeline to resolve non-standard race dates,
+# rerun races, duplicated station totals, and historical administrative code changes.
+
+default_dates:
+  2020:
+    round_1: 2020-09-27
+    round_2: 2020-10-11
+  2024:
+    round_1: 2024-06-09
+    round_2: 2024-06-23
+
+rerun_races:
+  2020:
+    - siruta: 51056
+      name: "Moldova Nouă"
+      county: "Caraș-Severin"
+      election_date: 2021-01-24
+      is_repeated_or_annulled: true
+      evidence: "Raw file name bd_sectii_27.09.2020+24.01.2021.csv records rerun date 24.01.2021; Moldova Nouă has 0 votes in pv_final_cntry_p.csv (dated 2020-10-02) and 3,894 valid votes in bd_sectii."
+  2024:
+    - siruta: 63286
+      name: "Costinești"
+      county: "Constanța"
+      election_date: 2024-07-07
+      is_repeated_or_annulled: true
+      sum_candidate_votes_as_valid: true
+      evidence: "Raw file name bd_sectii_09.06.2024+07.07.2024.csv records rerun date 07.07.2024; race results in pv_final_cntry_p.csv (09.06.2024) differ from rerun results in bd_sectii; station 417 reported duplicated counts so valid votes equal sum of candidate votes."
+
+siruta_mappings:
+  2020:
+    63171:
+      siruta: 61069
+      name: "Băneasa"
+      county: "Constanța"
+      evidence: "AEP 2020 recorded Băneasa under historical town SIRUTA 63171. Under Law 37/2019, Băneasa was demoted from town to commune, receiving SIRUTA 61069 in current official administrative reference tables."

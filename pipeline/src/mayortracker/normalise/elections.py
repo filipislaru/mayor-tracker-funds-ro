@@ -52,6 +52,59 @@ def load_party_aliases(config_path: Path) -> dict[int, dict[str, dict[str, Any]]
     return result
 
 
+def load_election_overrides(config_path: Path) -> dict[str, Any]:
+    """Load config/election_overrides.yaml containing rerun races, dates, and code mappings."""
+    if not config_path.is_file():
+        logger.warning("Election overrides config missing at %s", config_path)
+        return {
+            "default_dates": {
+                2020: {"round_1": date(2020, 9, 27), "round_2": date(2020, 10, 11)},
+                2024: {"round_1": date(2024, 6, 9), "round_2": date(2024, 6, 23)},
+            },
+            "rerun_races": {2020: {}, 2024: {}},
+            "siruta_mappings": {2020: {}, 2024: {}},
+        }
+    data = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
+
+    default_dates: dict[int, dict[str, date]] = {}
+    for yr, dates in data.get("default_dates", {}).items():
+        yr_int = int(yr)
+        default_dates[yr_int] = {}
+        for r_key, d_val in dates.items():
+            if isinstance(d_val, str):
+                default_dates[yr_int][r_key] = date.fromisoformat(d_val)
+            elif isinstance(d_val, date):
+                default_dates[yr_int][r_key] = d_val
+
+    rerun_races: dict[int, dict[int, dict[str, Any]]] = {2020: {}, 2024: {}}
+    for yr, races in data.get("rerun_races", {}).items():
+        yr_int = int(yr)
+        if yr_int not in rerun_races:
+            rerun_races[yr_int] = {}
+        for r in races:
+            s = int(r["siruta"])
+            r_copy = dict(r)
+            if isinstance(r_copy.get("election_date"), str):
+                r_copy["election_date"] = date.fromisoformat(r_copy["election_date"])
+            rerun_races[yr_int][s] = r_copy
+
+    siruta_mappings: dict[int, dict[int, int]] = {2020: {}, 2024: {}}
+    for yr, mappings in data.get("siruta_mappings", {}).items():
+        yr_int = int(yr)
+        if yr_int not in siruta_mappings:
+            siruta_mappings[yr_int] = {}
+        for raw_s, target in mappings.items():
+            raw_s_int = int(raw_s)
+            target_s_int = int(target["siruta"]) if isinstance(target, dict) else int(target)
+            siruta_mappings[yr_int][raw_s_int] = target_s_int
+
+    return {
+        "default_dates": default_dates,
+        "rerun_races": rerun_races,
+        "siruta_mappings": siruta_mappings,
+    }
+
+
 def _standardise_diacritics(s: str) -> str:
     trans = str.maketrans({"ş": "ș", "Ş": "Ș", "ţ": "ț", "Ţ": "Ț"})
     return re.sub(r"\s+", " ", s.translate(trans)).strip()
@@ -89,9 +142,7 @@ def parse_competitor_2024(
             norm_name = normalise_name(raw_name).display if raw_name else None
             party_info = alias_map.get(p)
             party_norm = (
-                party_info.get("party_normalised")
-                if party_info
-                else _standardise_diacritics(p)
+                party_info.get("party_normalised") if party_info else _standardise_diacritics(p)
             )
             is_alliance = (
                 party_info.get("is_alliance", False)
@@ -120,9 +171,7 @@ def parse_competitor_2024(
     return norm_name, s, _standardise_diacritics(s), False, False
 
 
-def get_manifest_provenance(
-    raw_dir: Path, source_id: str
-) -> dict[str, tuple[str, datetime, str]]:
+def get_manifest_provenance(raw_dir: Path, source_id: str) -> dict[str, tuple[str, datetime, str]]:
     """Scan data/raw/<source_id>/<date>/manifest.json for file provenance details."""
     prov: dict[str, tuple[str, datetime, str]] = {}
     base = raw_dir / source_id
@@ -136,11 +185,7 @@ def get_manifest_provenance(
                 url = entry.get("url", "")
                 sha = entry.get("sha256", "")
                 dt_str = entry.get("retrieved_at", "")
-                dt = (
-                    datetime.fromisoformat(dt_str)
-                    if dt_str
-                    else datetime.now()
-                )
+                dt = datetime.fromisoformat(dt_str) if dt_str else datetime.now()
                 if fname:
                     prov[fname] = (url, dt, sha)
         except Exception as e:
@@ -160,15 +205,16 @@ def normalise_elections(settings: Settings, year: int | None = None) -> dict[str
     config_path = cfg_dir / "party_aliases.yaml"
     party_aliases = load_party_aliases(config_path)
 
+    overrides_path = cfg_dir / "election_overrides.yaml"
+    election_overrides = load_election_overrides(overrides_path)
+
     # Load valid UATs
     uat_path = processed_dir / "uat.parquet"
     if not uat_path.is_file():
         raise FileNotFoundError(f"Missing required UAT reference table: {uat_path}")
 
     conn = duckdb.connect()
-    uat_records = conn.execute(
-        'SELECT siruta FROM "data/processed/uat.parquet"'
-    ).fetchall()
+    uat_records = conn.execute('SELECT siruta FROM "data/processed/uat.parquet"').fetchall()
     valid_sirutas = {r[0] for r in uat_records}
 
     prov = get_manifest_provenance(raw_dir, SOURCE_ID)
@@ -186,11 +232,11 @@ def normalise_elections(settings: Settings, year: int | None = None) -> dict[str
         logger.info("Processing election year %d...", yr)
         if yr == 2020:
             cands, races, terms, stations, m = _process_2020(
-                raw_dir, interim_dir, valid_sirutas, party_aliases[2020], prov
+                raw_dir, interim_dir, valid_sirutas, party_aliases[2020], prov, election_overrides
             )
         else:
             cands, races, terms, stations, m = _process_2024(
-                raw_dir, interim_dir, valid_sirutas, party_aliases[2024], prov
+                raw_dir, interim_dir, valid_sirutas, party_aliases[2024], prov, election_overrides
             )
         all_candidates.extend(cands)
         all_races.extend(races)
@@ -221,8 +267,15 @@ def _process_2020(
     valid_sirutas: set[int],
     alias_map: dict[str, dict[str, Any]],
     prov: dict[str, tuple[str, datetime, str]],
+    overrides: dict[str, Any],
 ) -> ProcessResult:
     conn = duckdb.connect()
+
+    siruta_map = overrides.get("siruta_mappings", {}).get(2020, {})
+    rerun_map = overrides.get("rerun_races", {}).get(2020, {})
+    default_dates = overrides.get("default_dates", {}).get(
+        2020, {"round_1": date(2020, 9, 27), "round_2": date(2020, 10, 11)}
+    )
 
     # Find raw files
     raw_files = list((raw_dir / "aep_local").rglob("bd_sectii_27.09.2020+24.01.2021.csv"))
@@ -284,7 +337,8 @@ def _process_2020(
 
     for row in main_df:
         tip, c_nce, c_name, nr_sv, uat_siruta_raw, a_val, b_val, c_val, comp, votes = row
-        siruta = BUCHAREST_SIRUTA if tip == "PG" else int(uat_siruta_raw)
+        raw_siruta = int(uat_siruta_raw)
+        siruta = BUCHAREST_SIRUTA if tip == "PG" else siruta_map.get(raw_siruta, raw_siruta)
         station_id = f"{c_nce}-{nr_sv}"
 
         if siruta not in races_r1:
@@ -294,11 +348,12 @@ def _process_2020(
         races_r1[siruta]["candidates"][comp] = races_r1[siruta]["candidates"].get(comp, 0) + votes
 
     # Organize Round 2 votes
-    # tied UATs: 151996 (Balaci), 34262 (Rebra), 158010 (Orțișoara)
+    # tied UATs: derived dynamically from runoff_df (bd_p_11.10.2020.csv)
     races_r2: dict[int, dict[str, Any]] = {}
     for row in runoff_df:
         c_nce, c_name, nr_sv, uat_siruta_raw, a_val, b_val, c_val, comp, votes = row
-        siruta = int(uat_siruta_raw)
+        raw_siruta = int(uat_siruta_raw)
+        siruta = siruta_map.get(raw_siruta, raw_siruta)
         station_id = f"{c_nce}-{nr_sv}"
         if siruta not in races_r2:
             races_r2[siruta] = {"stations": {}, "candidates": {}}
@@ -350,9 +405,7 @@ def _process_2020(
             rank1_v = sorted_comps_r1[0][1]
             rank2_v = sorted_comps_r1[1][1]
             round1_margin_pp = (
-                round((rank1_v - rank2_v) / valid_r1 * 100.0, 4)
-                if valid_r1 > 0
-                else 0.0
+                round((rank1_v - rank2_v) / valid_r1 * 100.0, 4) if valid_r1 > 0 else 0.0
             )
 
         # Build candidate records for Round 1
@@ -377,9 +430,7 @@ def _process_2020(
                 party_raw = comp
                 p_info = alias_map.get(comp)
                 party_norm = (
-                    p_info.get("party_normalised")
-                    if p_info
-                    else _standardise_diacritics(comp)
+                    p_info.get("party_normalised") if p_info else _standardise_diacritics(comp)
                 )
                 is_alliance = (
                     p_info.get("is_alliance", False)
@@ -388,26 +439,28 @@ def _process_2020(
                 )
 
             is_winner = (decided_in_round == 1) and (rank == 1)
-            candidates_out.append({
-                "year": 2020,
-                "siruta": siruta,
-                "round": 1,
-                "candidate_id": cand_id,
-                "candidate_name": cand_name,
-                "name_key": name_key,
-                "party_raw": party_raw,
-                "party_normalised": party_norm,
-                "is_independent": is_indep,
-                "is_alliance": is_alliance,
-                "votes": votes,
-                "vote_share": v_share,
-                "rank": rank,
-                "is_winner": is_winner,
-                "source_id": SOURCE_ID,
-                "source_url": url,
-                "retrieved_at": dt,
-                "raw_sha256": sha,
-            })
+            candidates_out.append(
+                {
+                    "year": 2020,
+                    "siruta": siruta,
+                    "round": 1,
+                    "candidate_id": cand_id,
+                    "candidate_name": cand_name,
+                    "name_key": name_key,
+                    "party_raw": party_raw,
+                    "party_normalised": party_norm,
+                    "is_independent": is_indep,
+                    "is_alliance": is_alliance,
+                    "votes": votes,
+                    "vote_share": v_share,
+                    "rank": rank,
+                    "is_winner": is_winner,
+                    "source_id": SOURCE_ID,
+                    "source_url": url,
+                    "retrieved_at": dt,
+                    "raw_sha256": sha,
+                }
+            )
 
         # If decided in Round 2: process Round 2 candidates
         if is_tied_r1:
@@ -439,9 +492,7 @@ def _process_2020(
                     party_raw = comp
                     p_info = alias_map.get(comp)
                     party_norm = (
-                        p_info.get("party_normalised")
-                        if p_info
-                        else _standardise_diacritics(comp)
+                        p_info.get("party_normalised") if p_info else _standardise_diacritics(comp)
                     )
                     is_alliance = (
                         p_info.get("is_alliance", False)
@@ -450,26 +501,28 @@ def _process_2020(
                     )
 
                 is_winner = rank == 1
-                candidates_out.append({
-                    "year": 2020,
-                    "siruta": siruta,
-                    "round": 2,
-                    "candidate_id": cand_id,
-                    "candidate_name": cand_name,
-                    "name_key": name_key,
-                    "party_raw": party_raw,
-                    "party_normalised": party_norm,
-                    "is_independent": is_indep,
-                    "is_alliance": is_alliance,
-                    "votes": votes,
-                    "vote_share": v_share,
-                    "rank": rank,
-                    "is_winner": is_winner,
-                    "source_id": SOURCE_ID,
-                    "source_url": r_url,
-                    "retrieved_at": r_dt,
-                    "raw_sha256": r_sha,
-                })
+                candidates_out.append(
+                    {
+                        "year": 2020,
+                        "siruta": siruta,
+                        "round": 2,
+                        "candidate_id": cand_id,
+                        "candidate_name": cand_name,
+                        "name_key": name_key,
+                        "party_raw": party_raw,
+                        "party_normalised": party_norm,
+                        "is_independent": is_indep,
+                        "is_alliance": is_alliance,
+                        "votes": votes,
+                        "vote_share": v_share,
+                        "rank": rank,
+                        "is_winner": is_winner,
+                        "source_id": SOURCE_ID,
+                        "source_url": r_url,
+                        "retrieved_at": r_dt,
+                        "raw_sha256": r_sha,
+                    }
+                )
 
             deciding_sorted = sorted_comps_r2
             deciding_valid = valid_r2
@@ -478,7 +531,7 @@ def _process_2020(
             deciding_url = r_url
             deciding_dt = r_dt
             deciding_sha = r_sha
-            election_date = date(2020, 10, 11)
+            election_date = default_dates.get("round_2", date(2020, 10, 11))
             is_repeated = False
         else:
             deciding_sorted = sorted_comps_r1
@@ -488,20 +541,19 @@ def _process_2020(
             deciding_url = url
             deciding_dt = dt
             deciding_sha = sha
-            if siruta == 51056:  # Moldova Nouă
-                election_date = date(2021, 1, 24)
-                is_repeated = True
+            rerun_info = rerun_map.get(siruta)
+            if rerun_info:
+                election_date = rerun_info["election_date"]
+                is_repeated = rerun_info.get("is_repeated_or_annulled", True)
             else:
-                election_date = date(2020, 9, 27)
+                election_date = default_dates.get("round_1", date(2020, 9, 27))
                 is_repeated = False
 
         # Compute deciding round margins and winner
         winner_comp, winner_votes = deciding_sorted[0]
         winner_cand_id = f"2020-{siruta}-r{decided_in_round}-1"
         winner_share = (
-            round(winner_votes / deciding_valid * 100.0, 4)
-            if deciding_valid > 0
-            else 0.0
+            round(winner_votes / deciding_valid * 100.0, 4) if deciding_valid > 0 else 0.0
         )
 
         if is_uncontested:
@@ -511,9 +563,7 @@ def _process_2020(
         else:
             runner_up_comp, runner_up_votes = deciding_sorted[1]
             runner_up_share = (
-                round(runner_up_votes / deciding_valid * 100.0, 4)
-                if deciding_valid > 0
-                else 0.0
+                round(runner_up_votes / deciding_valid * 100.0, 4) if deciding_valid > 0 else 0.0
             )
             margin_pp = (
                 round((winner_votes - runner_up_votes) / deciding_valid * 100.0, 4)
@@ -521,27 +571,29 @@ def _process_2020(
                 else 0.0
             )
 
-        races_out.append({
-            "year": 2020,
-            "siruta": siruta,
-            "election_date": election_date,
-            "decided_in_round": decided_in_round,
-            "is_uncontested": is_uncontested,
-            "registered_voters": deciding_reg,
-            "votes_cast": deciding_cast,
-            "valid_votes": deciding_valid,
-            "n_candidates": len(deciding_sorted),
-            "winner_candidate_id": winner_cand_id,
-            "winner_vote_share": winner_share,
-            "runner_up_vote_share": runner_up_share,
-            "round1_margin_pp": round1_margin_pp,
-            "margin_pp": margin_pp,
-            "is_repeated_or_annulled": is_repeated,
-            "source_id": SOURCE_ID,
-            "source_url": deciding_url,
-            "retrieved_at": deciding_dt,
-            "raw_sha256": deciding_sha,
-        })
+        races_out.append(
+            {
+                "year": 2020,
+                "siruta": siruta,
+                "election_date": election_date,
+                "decided_in_round": decided_in_round,
+                "is_uncontested": is_uncontested,
+                "registered_voters": deciding_reg,
+                "votes_cast": deciding_cast,
+                "valid_votes": deciding_valid,
+                "n_candidates": len(deciding_sorted),
+                "winner_candidate_id": winner_cand_id,
+                "winner_vote_share": winner_share,
+                "runner_up_vote_share": runner_up_share,
+                "round1_margin_pp": round1_margin_pp,
+                "margin_pp": margin_pp,
+                "is_repeated_or_annulled": is_repeated,
+                "source_id": SOURCE_ID,
+                "source_url": deciding_url,
+                "retrieved_at": deciding_dt,
+                "raw_sha256": deciding_sha,
+            }
+        )
 
         # Mayor term
         winner_is_indep = winner_comp.startswith("CANDIDAT INDEPENDENT-")
@@ -558,17 +610,19 @@ def _process_2020(
                 else _standardise_diacritics(winner_comp)
             )
 
-        terms_out.append({
-            "term_id": f"2020-{siruta}",
-            "siruta": siruta,
-            "election_year": 2020,
-            "term_start": None,
-            "planned_term_end": None,
-            "candidate_id": winner_cand_id,
-            "mayor_name": mayor_name,
-            "party_normalised": winner_p_norm,
-            "margin_pp": margin_pp,
-        })
+        terms_out.append(
+            {
+                "term_id": f"2020-{siruta}",
+                "siruta": siruta,
+                "election_year": 2020,
+                "term_start": None,
+                "planned_term_end": None,
+                "candidate_id": winner_cand_id,
+                "mayor_name": mayor_name,
+                "party_normalised": winner_p_norm,
+                "margin_pp": margin_pp,
+            }
+        )
 
     # Build polling station table for 2020
     for row in main_df:
@@ -578,20 +632,22 @@ def _process_2020(
         cand_id = cand_id_map.get((siruta, 1, comp), "")
         cand_name = comp[21:].strip() if comp.startswith("CANDIDAT INDEPENDENT-") else None
         norm_cand_name = normalise_name(cand_name).display if cand_name else None
-        stations_out.append({
-            "year": 2020,
-            "siruta": siruta,
-            "round": 1,
-            "station_id": station_id,
-            "candidate_id": cand_id,
-            "candidate_name": norm_cand_name,
-            "party_raw": comp,
-            "votes": votes,
-            "source_id": SOURCE_ID,
-            "source_url": url,
-            "retrieved_at": dt,
-            "raw_sha256": sha,
-        })
+        stations_out.append(
+            {
+                "year": 2020,
+                "siruta": siruta,
+                "round": 1,
+                "station_id": station_id,
+                "candidate_id": cand_id,
+                "candidate_name": norm_cand_name,
+                "party_raw": comp,
+                "votes": votes,
+                "source_id": SOURCE_ID,
+                "source_url": url,
+                "retrieved_at": dt,
+                "raw_sha256": sha,
+            }
+        )
 
     for row in runoff_df:
         c_nce, c_name, nr_sv, uat_siruta_raw, _, _, _, comp, votes = row
@@ -600,20 +656,22 @@ def _process_2020(
         cand_id = cand_id_map.get((siruta, 2, comp), "")
         cand_name = comp[21:].strip() if comp.startswith("CANDIDAT INDEPENDENT-") else None
         norm_cand_name = normalise_name(cand_name).display if cand_name else None
-        stations_out.append({
-            "year": 2020,
-            "siruta": siruta,
-            "round": 2,
-            "station_id": station_id,
-            "candidate_id": cand_id,
-            "candidate_name": norm_cand_name,
-            "party_raw": comp,
-            "votes": votes,
-            "source_id": SOURCE_ID,
-            "source_url": r_url,
-            "retrieved_at": r_dt,
-            "raw_sha256": r_sha,
-        })
+        stations_out.append(
+            {
+                "year": 2020,
+                "siruta": siruta,
+                "round": 2,
+                "station_id": station_id,
+                "candidate_id": cand_id,
+                "candidate_name": norm_cand_name,
+                "party_raw": comp,
+                "votes": votes,
+                "source_id": SOURCE_ID,
+                "source_url": r_url,
+                "retrieved_at": r_dt,
+                "raw_sha256": r_sha,
+            }
+        )
 
     metrics = {
         "year": 2020,
@@ -634,8 +692,15 @@ def _process_2024(
     valid_sirutas: set[int],
     alias_map: dict[str, dict[str, Any]],
     prov: dict[str, tuple[str, datetime, str]],
+    overrides: dict[str, Any],
 ) -> ProcessResult:
     conn = duckdb.connect()
+
+    siruta_map = overrides.get("siruta_mappings", {}).get(2024, {})
+    rerun_map = overrides.get("rerun_races", {}).get(2024, {})
+    default_dates = overrides.get("default_dates", {}).get(
+        2024, {"round_1": date(2024, 6, 9), "round_2": date(2024, 6, 23)}
+    )
 
     # Find 2024 files in interim (extracted from 7z)
     i_dir = interim_dir / "aep_local/2024/Alegeri locale 2024"
@@ -697,7 +762,8 @@ def _process_2024(
     races_r1: dict[int, dict[str, Any]] = {}
     for row in main_df:
         tip, cod, nr_sv, siruta_raw, a_val, b_val, c_val, comp, votes = row
-        siruta = BUCHAREST_SIRUTA if tip == "PG" else int(siruta_raw)
+        raw_siruta = int(siruta_raw)
+        siruta = BUCHAREST_SIRUTA if tip == "PG" else siruta_map.get(raw_siruta, raw_siruta)
         station_id = f"{cod}-{nr_sv}"
 
         if siruta not in races_r1:
@@ -706,10 +772,13 @@ def _process_2024(
             races_r1[siruta]["stations"][station_id] = (a_val, b_val, c_val)
         races_r1[siruta]["candidates"][comp] = races_r1[siruta]["candidates"].get(comp, 0) + votes
 
+    # Organize Round 2 votes
+    # tied UATs: derived dynamically from runoff_df (bd_p_23.06.2024.csv)
     races_r2: dict[int, dict[str, Any]] = {}
     for row in runoff_df:
         c_nce, nr_sv, uat_siruta_raw, a_val, b_val, c_val, comp, votes = row
-        siruta = int(uat_siruta_raw)
+        raw_siruta = int(uat_siruta_raw)
+        siruta = siruta_map.get(raw_siruta, raw_siruta)
         station_id = f"{c_nce}-{nr_sv}"
         if siruta not in races_r2:
             races_r2[siruta] = {"stations": {}, "candidates": {}}
@@ -738,15 +807,14 @@ def _process_2024(
         cast_r1 = sum(st[1] for st in r1_info["stations"].values())
         valid_r1 = sum(st[2] for st in r1_info["stations"].values())
 
-        # For Costinesti station 417: sum candidate votes as valid votes
-        # if station reported duplicate counts
+        # If station reported duplicate counts, sum candidate votes
+        # as valid votes (configured per UAT in overrides)
         sum_cand_votes_r1 = sum(r1_info["candidates"].values())
-        if siruta == 63286:
+        rerun_info = rerun_map.get(siruta)
+        if rerun_info and rerun_info.get("sum_candidate_votes_as_valid"):
             valid_r1 = sum_cand_votes_r1
 
-        sorted_comps_r1 = sorted(
-            r1_info["candidates"].items(), key=lambda x: x[1], reverse=True
-        )
+        sorted_comps_r1 = sorted(r1_info["candidates"].items(), key=lambda x: x[1], reverse=True)
         disc_r1 = abs(sum_cand_votes_r1 - valid_r1)
         if disc_r1 > 0:
             discrepancy_count += 1
@@ -764,9 +832,7 @@ def _process_2024(
             rank1_v = sorted_comps_r1[0][1]
             rank2_v = sorted_comps_r1[1][1]
             round1_margin_pp = (
-                round((rank1_v - rank2_v) / valid_r1 * 100.0, 4)
-                if valid_r1 > 0
-                else 0.0
+                round((rank1_v - rank2_v) / valid_r1 * 100.0, 4) if valid_r1 > 0 else 0.0
             )
 
         # Build candidate records for Round 1
@@ -784,26 +850,28 @@ def _process_2024(
             v_share = round(votes / valid_r1 * 100.0, 4) if valid_r1 > 0 else 0.0
             is_winner = (decided_in_round == 1) and (rank == 1)
 
-            candidates_out.append({
-                "year": 2024,
-                "siruta": siruta,
-                "round": 1,
-                "candidate_id": cand_id,
-                "candidate_name": c_name,
-                "name_key": name_key,
-                "party_raw": p_raw,
-                "party_normalised": p_norm,
-                "is_independent": is_indep,
-                "is_alliance": is_alliance,
-                "votes": votes,
-                "vote_share": v_share,
-                "rank": rank,
-                "is_winner": is_winner,
-                "source_id": SOURCE_ID,
-                "source_url": url,
-                "retrieved_at": dt,
-                "raw_sha256": sha,
-            })
+            candidates_out.append(
+                {
+                    "year": 2024,
+                    "siruta": siruta,
+                    "round": 1,
+                    "candidate_id": cand_id,
+                    "candidate_name": c_name,
+                    "name_key": name_key,
+                    "party_raw": p_raw,
+                    "party_normalised": p_norm,
+                    "is_independent": is_indep,
+                    "is_alliance": is_alliance,
+                    "votes": votes,
+                    "vote_share": v_share,
+                    "rank": rank,
+                    "is_winner": is_winner,
+                    "source_id": SOURCE_ID,
+                    "source_url": url,
+                    "retrieved_at": dt,
+                    "raw_sha256": sha,
+                }
+            )
 
         if is_tied_r1:
             r2_info = races_r2[siruta]
@@ -827,43 +895,46 @@ def _process_2024(
                 v_share = round(votes / valid_r2 * 100.0, 4) if valid_r2 > 0 else 0.0
                 is_winner = rank == 1
 
-                candidates_out.append({
-                    "year": 2024,
-                    "siruta": siruta,
-                    "round": 2,
-                    "candidate_id": cand_id,
-                    "candidate_name": c_name,
-                    "name_key": name_key,
-                    "party_raw": p_raw,
-                    "party_normalised": p_norm,
-                    "is_independent": is_indep,
-                    "is_alliance": is_alliance,
-                    "votes": votes,
-                    "vote_share": v_share,
-                    "rank": rank,
-                    "is_winner": is_winner,
-                    "source_id": SOURCE_ID,
-                    "source_url": url,
-                    "retrieved_at": dt,
-                    "raw_sha256": sha,
-                })
+                candidates_out.append(
+                    {
+                        "year": 2024,
+                        "siruta": siruta,
+                        "round": 2,
+                        "candidate_id": cand_id,
+                        "candidate_name": c_name,
+                        "name_key": name_key,
+                        "party_raw": p_raw,
+                        "party_normalised": p_norm,
+                        "is_independent": is_indep,
+                        "is_alliance": is_alliance,
+                        "votes": votes,
+                        "vote_share": v_share,
+                        "rank": rank,
+                        "is_winner": is_winner,
+                        "source_id": SOURCE_ID,
+                        "source_url": url,
+                        "retrieved_at": dt,
+                        "raw_sha256": sha,
+                    }
+                )
 
             deciding_sorted = sorted_comps_r2
             deciding_valid = valid_r2
             deciding_reg = reg_r2
             deciding_cast = cast_r2
-            election_date = date(2024, 6, 23)
+            election_date = default_dates.get("round_2", date(2024, 6, 23))
             is_repeated = False
         else:
             deciding_sorted = sorted_comps_r1
             deciding_valid = valid_r1
             deciding_reg = reg_r1
             deciding_cast = cast_r1
-            if siruta == 63286:  # Costinești
-                election_date = date(2024, 7, 7)
-                is_repeated = True
+            rerun_info = rerun_map.get(siruta)
+            if rerun_info:
+                election_date = rerun_info["election_date"]
+                is_repeated = rerun_info.get("is_repeated_or_annulled", True)
             else:
-                election_date = date(2024, 6, 9)
+                election_date = default_dates.get("round_1", date(2024, 6, 9))
                 is_repeated = False
 
         winner_comp, winner_votes = deciding_sorted[0]
@@ -874,9 +945,7 @@ def _process_2024(
         if winner_c_name:
             named_winners_count += 1
         winner_share = (
-            round(winner_votes / deciding_valid * 100.0, 4)
-            if deciding_valid > 0
-            else 0.0
+            round(winner_votes / deciding_valid * 100.0, 4) if deciding_valid > 0 else 0.0
         )
 
         if is_uncontested:
@@ -886,9 +955,7 @@ def _process_2024(
         else:
             runner_up_comp, runner_up_votes = deciding_sorted[1]
             runner_up_share = (
-                round(runner_up_votes / deciding_valid * 100.0, 4)
-                if deciding_valid > 0
-                else 0.0
+                round(runner_up_votes / deciding_valid * 100.0, 4) if deciding_valid > 0 else 0.0
             )
             margin_pp = (
                 round((winner_votes - runner_up_votes) / deciding_valid * 100.0, 4)
@@ -896,39 +963,43 @@ def _process_2024(
                 else 0.0
             )
 
-        races_out.append({
-            "year": 2024,
-            "siruta": siruta,
-            "election_date": election_date,
-            "decided_in_round": decided_in_round,
-            "is_uncontested": is_uncontested,
-            "registered_voters": deciding_reg,
-            "votes_cast": deciding_cast,
-            "valid_votes": deciding_valid,
-            "n_candidates": len(deciding_sorted),
-            "winner_candidate_id": winner_cand_id,
-            "winner_vote_share": winner_share,
-            "runner_up_vote_share": runner_up_share,
-            "round1_margin_pp": round1_margin_pp,
-            "margin_pp": margin_pp,
-            "is_repeated_or_annulled": is_repeated,
-            "source_id": SOURCE_ID,
-            "source_url": url,
-            "retrieved_at": dt,
-            "raw_sha256": sha,
-        })
+        races_out.append(
+            {
+                "year": 2024,
+                "siruta": siruta,
+                "election_date": election_date,
+                "decided_in_round": decided_in_round,
+                "is_uncontested": is_uncontested,
+                "registered_voters": deciding_reg,
+                "votes_cast": deciding_cast,
+                "valid_votes": deciding_valid,
+                "n_candidates": len(deciding_sorted),
+                "winner_candidate_id": winner_cand_id,
+                "winner_vote_share": winner_share,
+                "runner_up_vote_share": runner_up_share,
+                "round1_margin_pp": round1_margin_pp,
+                "margin_pp": margin_pp,
+                "is_repeated_or_annulled": is_repeated,
+                "source_id": SOURCE_ID,
+                "source_url": url,
+                "retrieved_at": dt,
+                "raw_sha256": sha,
+            }
+        )
 
-        terms_out.append({
-            "term_id": f"2024-{siruta}",
-            "siruta": siruta,
-            "election_year": 2024,
-            "term_start": None,
-            "planned_term_end": None,
-            "candidate_id": winner_cand_id,
-            "mayor_name": winner_c_name,
-            "party_normalised": winner_p_norm,
-            "margin_pp": margin_pp,
-        })
+        terms_out.append(
+            {
+                "term_id": f"2024-{siruta}",
+                "siruta": siruta,
+                "election_year": 2024,
+                "term_start": None,
+                "planned_term_end": None,
+                "candidate_id": winner_cand_id,
+                "mayor_name": winner_c_name,
+                "party_normalised": winner_p_norm,
+                "margin_pp": margin_pp,
+            }
+        )
 
     # Build polling station records for 2024
     for row in main_df:
@@ -939,20 +1010,22 @@ def _process_2024(
         cand_id = cid_info[0] if cid_info else ""
         c_name = cid_info[1] if cid_info else None
         p_raw = cid_info[2] if cid_info else comp
-        stations_out.append({
-            "year": 2024,
-            "siruta": siruta,
-            "round": 1,
-            "station_id": station_id,
-            "candidate_id": cand_id,
-            "candidate_name": c_name,
-            "party_raw": p_raw,
-            "votes": votes,
-            "source_id": SOURCE_ID,
-            "source_url": url,
-            "retrieved_at": dt,
-            "raw_sha256": sha,
-        })
+        stations_out.append(
+            {
+                "year": 2024,
+                "siruta": siruta,
+                "round": 1,
+                "station_id": station_id,
+                "candidate_id": cand_id,
+                "candidate_name": c_name,
+                "party_raw": p_raw,
+                "votes": votes,
+                "source_id": SOURCE_ID,
+                "source_url": url,
+                "retrieved_at": dt,
+                "raw_sha256": sha,
+            }
+        )
 
     for row in runoff_df:
         c_nce, nr_sv, uat_siruta_raw, _, _, _, comp, votes = row
@@ -962,20 +1035,22 @@ def _process_2024(
         cand_id = cid_info[0] if cid_info else ""
         c_name = cid_info[1] if cid_info else None
         p_raw = cid_info[2] if cid_info else comp
-        stations_out.append({
-            "year": 2024,
-            "siruta": siruta,
-            "round": 2,
-            "station_id": station_id,
-            "candidate_id": cand_id,
-            "candidate_name": c_name,
-            "party_raw": p_raw,
-            "votes": votes,
-            "source_id": SOURCE_ID,
-            "source_url": url,
-            "retrieved_at": dt,
-            "raw_sha256": sha,
-        })
+        stations_out.append(
+            {
+                "year": 2024,
+                "siruta": siruta,
+                "round": 2,
+                "station_id": station_id,
+                "candidate_id": cand_id,
+                "candidate_name": c_name,
+                "party_raw": p_raw,
+                "votes": votes,
+                "source_id": SOURCE_ID,
+                "source_url": url,
+                "retrieved_at": dt,
+                "raw_sha256": sha,
+            }
+        )
 
     metrics = {
         "year": 2024,
@@ -1005,75 +1080,83 @@ def _write_parquet_tables(
     validated_terms = [MayorTermRecord(**t).model_dump() for t in terms]
     validated_stations = [PollingStationMayorRecord(**s).model_dump() for s in stations]
 
-    cand_schema = pa.schema([
-        ("year", pa.int64()),
-        ("siruta", pa.int64()),
-        ("round", pa.int64()),
-        ("candidate_id", pa.string()),
-        ("candidate_name", pa.string()),
-        ("name_key", pa.string()),
-        ("party_raw", pa.string()),
-        ("party_normalised", pa.string()),
-        ("is_independent", pa.bool_()),
-        ("is_alliance", pa.bool_()),
-        ("votes", pa.int64()),
-        ("vote_share", pa.float64()),
-        ("rank", pa.int64()),
-        ("is_winner", pa.bool_()),
-        ("source_id", pa.string()),
-        ("source_url", pa.string()),
-        ("retrieved_at", pa.timestamp("us", tz="UTC")),
-        ("raw_sha256", pa.string()),
-    ])
+    cand_schema = pa.schema(
+        [
+            ("year", pa.int64()),
+            ("siruta", pa.int64()),
+            ("round", pa.int64()),
+            ("candidate_id", pa.string()),
+            ("candidate_name", pa.string()),
+            ("name_key", pa.string()),
+            ("party_raw", pa.string()),
+            ("party_normalised", pa.string()),
+            ("is_independent", pa.bool_()),
+            ("is_alliance", pa.bool_()),
+            ("votes", pa.int64()),
+            ("vote_share", pa.float64()),
+            ("rank", pa.int64()),
+            ("is_winner", pa.bool_()),
+            ("source_id", pa.string()),
+            ("source_url", pa.string()),
+            ("retrieved_at", pa.timestamp("us", tz="UTC")),
+            ("raw_sha256", pa.string()),
+        ]
+    )
 
-    race_schema = pa.schema([
-        ("year", pa.int64()),
-        ("siruta", pa.int64()),
-        ("election_date", pa.date32()),
-        ("decided_in_round", pa.int64()),
-        ("is_uncontested", pa.bool_()),
-        ("registered_voters", pa.int64()),
-        ("votes_cast", pa.int64()),
-        ("valid_votes", pa.int64()),
-        ("n_candidates", pa.int64()),
-        ("winner_candidate_id", pa.string()),
-        ("winner_vote_share", pa.float64()),
-        ("runner_up_vote_share", pa.float64()),
-        ("round1_margin_pp", pa.float64()),
-        ("margin_pp", pa.float64()),
-        ("is_repeated_or_annulled", pa.bool_()),
-        ("source_id", pa.string()),
-        ("source_url", pa.string()),
-        ("retrieved_at", pa.timestamp("us", tz="UTC")),
-        ("raw_sha256", pa.string()),
-    ])
+    race_schema = pa.schema(
+        [
+            ("year", pa.int64()),
+            ("siruta", pa.int64()),
+            ("election_date", pa.date32()),
+            ("decided_in_round", pa.int64()),
+            ("is_uncontested", pa.bool_()),
+            ("registered_voters", pa.int64()),
+            ("votes_cast", pa.int64()),
+            ("valid_votes", pa.int64()),
+            ("n_candidates", pa.int64()),
+            ("winner_candidate_id", pa.string()),
+            ("winner_vote_share", pa.float64()),
+            ("runner_up_vote_share", pa.float64()),
+            ("round1_margin_pp", pa.float64()),
+            ("margin_pp", pa.float64()),
+            ("is_repeated_or_annulled", pa.bool_()),
+            ("source_id", pa.string()),
+            ("source_url", pa.string()),
+            ("retrieved_at", pa.timestamp("us", tz="UTC")),
+            ("raw_sha256", pa.string()),
+        ]
+    )
 
-    term_schema = pa.schema([
-        ("term_id", pa.string()),
-        ("siruta", pa.int64()),
-        ("election_year", pa.int64()),
-        ("term_start", pa.date32()),
-        ("planned_term_end", pa.date32()),
-        ("candidate_id", pa.string()),
-        ("mayor_name", pa.string()),
-        ("party_normalised", pa.string()),
-        ("margin_pp", pa.float64()),
-    ])
+    term_schema = pa.schema(
+        [
+            ("term_id", pa.string()),
+            ("siruta", pa.int64()),
+            ("election_year", pa.int64()),
+            ("term_start", pa.date32()),
+            ("planned_term_end", pa.date32()),
+            ("candidate_id", pa.string()),
+            ("mayor_name", pa.string()),
+            ("party_normalised", pa.string()),
+            ("margin_pp", pa.float64()),
+        ]
+    )
 
-    station_schema = pa.schema([
-        ("year", pa.int64()),
-        ("siruta", pa.int64()),
-        ("round", pa.int64()),
-        ("station_id", pa.string()),
-        ("candidate_id", pa.string()),
-        ("candidate_name", pa.string()),
-        ("party_raw", pa.string()),
-        ("votes", pa.int64()),
-        ("source_id", pa.string()),
-        ("source_url", pa.string()),
-        ("retrieved_at", pa.timestamp("us", tz="UTC")),
-        ("raw_sha256", pa.string()),
-    ])
+    station_schema = pa.schema(
+        [
+            ("year", pa.int64()),
+            ("siruta", pa.int64()),
+            ("round", pa.int64()),
+            ("station_id", pa.string()),
+            ("candidate_id", pa.string()),
+            ("candidate_name", pa.string()),
+            ("party_raw", pa.string()),
+            ("votes", pa.int64()),
+            ("source_id", pa.string()),
+            ("source_url", pa.string()),
+            ("retrieved_at", pa.timestamp("us", tz="UTC")),
+            ("raw_sha256", pa.string()),
+        ]
+    )
 
     # Convert to Arrow tables
     t_cands = pa.Table.from_pylist(validated_cands, schema=cand_schema)
@@ -1094,9 +1177,7 @@ def reconcile_county_party(settings: Settings, year: int) -> list[dict[str, Any]
     data_dir = settings.data_dir
     conn = duckdb.connect()
 
-    uat_df = conn.execute(
-        'SELECT siruta, county_name FROM "data/processed/uat.parquet"'
-    ).fetchdf()
+    uat_df = conn.execute('SELECT siruta, county_name FROM "data/processed/uat.parquet"').fetchdf()
     siruta_to_county = dict(
         zip(
             uat_df["siruta"],
@@ -1121,9 +1202,7 @@ def reconcile_county_party(settings: Settings, year: int) -> list[dict[str, Any]
         f"quote='\"', all_varchar=True)"
     )
     pv_data = conn.execute(csv_sql).fetchdf()
-    pv_data["c_key"] = pv_data["county_name"].apply(
-        lambda x: normalise_name(x).key if x else ""
-    )
+    pv_data["c_key"] = pv_data["county_name"].apply(lambda x: normalise_name(x).key if x else "")
 
     # Read candidates parquet
     cands_path = data_dir / "processed/mayor_candidates.parquet"
@@ -1154,7 +1233,7 @@ def reconcile_county_party(settings: Settings, year: int) -> list[dict[str, Any]
             pname = pcol[:-7].strip()
             pname_clean = pname.strip('"')
 
-            if pname_clean == "Candidat Independent" or "independent" in pname_clean.lower():
+            if pname_clean.lower() == "candidat independent":
                 agg_v = int(
                     county_cands[county_cands["is_independent"] == True]["votes"].sum()  # noqa: E712
                 )
@@ -1167,13 +1246,15 @@ def reconcile_county_party(settings: Settings, year: int) -> list[dict[str, Any]
                 agg_v = int(p_cands["votes"].sum())
 
             if agg_v != pv_v:
-                discrepancies.append({
-                    "year": year,
-                    "county": c_name,
-                    "party": pname_clean,
-                    "pv_votes": pv_v,
-                    "agg_votes": agg_v,
-                    "diff": agg_v - pv_v,
-                })
+                discrepancies.append(
+                    {
+                        "year": year,
+                        "county": c_name,
+                        "party": pname_clean,
+                        "pv_votes": pv_v,
+                        "agg_votes": agg_v,
+                        "diff": agg_v - pv_v,
+                    }
+                )
 
     return discrepancies
