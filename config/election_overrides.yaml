@@ -1,0 +1,38 @@
+# Election overrides and rerun race metadata.
+# Used by the normalisation pipeline to resolve non-standard race dates,
+# rerun races, duplicated station totals, and historical administrative code changes.
+
+default_dates:
+  2020:
+    round_1: 2020-09-27
+    round_2: 2020-10-11
+  2024:
+    round_1: 2024-06-09
+    round_2: 2024-06-23
+
+rerun_races:
+  2020:
+    - siruta: 51056
+      name: "Moldova Nouă"
+      county: "Caraș-Severin"
+      election_date: 2021-01-24
+      is_repeated_or_annulled: true
+      evidence: "Raw file name bd_sectii_27.09.2020+24.01.2021.csv records rerun date 24.01.2021; Moldova Nouă has 0 votes in pv_final_cntry_p.csv (dated 2020-10-02) and 3,894 valid votes in bd_sectii."
+  2024:
+    - siruta: 63286
+      name: "Costinești"
+      county: "Constanța"
+      election_date: 2024-07-07
+      is_repeated_or_annulled: true
+      valid_votes_reported: 1972
+      valid_votes: 2114
+      valid_votes_adjusted: true
+      evidence: "Raw file bd_sectii_09.06.2024+07.07.2024.csv records rerun date 07.07.2024; race results in pv_final_cntry_p.csv (09.06.2024) differ from rerun results in bd_sectii. Station 417 reported conflicting station headers across candidate rows: row 1 reported a=1933, b=1399, c=1393, while rows 2 and 3 reported a=1955, b=1271, c=1251. Taking conflicting reported figure c=1251 yields race total valid_votes_reported=1972 (721 in st 416 + 1251 in st 417). Actual candidate votes sum to valid_votes=2114 (721 in st 416 + 1393 in st 417), so valid_votes_adjusted=True."
+
+siruta_mappings:
+  2020:
+    63171:
+      siruta: 61069
+      name: "Băneasa"
+      county: "Constanța"
+      evidence: "File-based evidence: 63171 is absent from SIRUTA s1 2026 (uat.parquet); 61069 is present in Constanța with the same name (BĂNEASA); 61069 is absent from the AEP 2020 file, where 63171 is present. Note: External explanation regarding Law 37/2019 demoting Băneasa from town to commune is unverified (not read in an accessed repository document)."

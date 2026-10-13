@@ -12,7 +12,7 @@ Status values: `to verify` (believed to exist, not yet checked), `verified`
 |---|---|---|---|---|---|---|
 | `siruta` | SIRUTA nomenclature of administrative units and localities | INS (via data.gov.ro) | UAT and village reference table | Semestrul 1 2026 (SIRUTA_s1 2026) | data.gov.ro (CC-BY-4.0) | verified |
 | `lau_boundaries` | LAU boundaries | Eurostat GISCO | Map polygons; LAU code equals SIRUTA (RO_<siruta>) | 2024 (rev. 2026) | Eurostat open data (© EuroGeographics) | verified |
-| `aep_local` | Local election results | AEP (Permanent Electoral Authority) | Mayors, parties, votes, margins | 2008–2024 | Official results; format to document | to verify |
+| `aep_local` | Local election results | AEP (Permanent Electoral Authority) | Mayors, parties, votes, margins | 2020, 2024 (2008–2016 to add) | Official results (CSV, 7z archive); https://www.roaep.ro/prezentare/baze-de-date-alegeri-electorale/ | verified |
 | `kohesio` | Kohesio projects and beneficiaries | European Commission (DG REGIO) | EU cohesion projects (ERDF, Cohesion Fund, ESF), 2014–2020; 2021–2027 being added | EU-wide | CSV/XLSX/RDF downloads; locations are sometimes the beneficiary's address | to verify |
 | `eu_far` | EU Funds Absorbed by Romanian Municipalities, 2016–2022 (Marin & Glăvan) | UK Data Service | EU funds per UAT from budget execution | 2016–2022 | UKDS account; check licence | to verify |
 | `budget_exec` | Local budget execution by UAT | MDLPA, Directorate for Local Fiscal and Budgetary Policies | Revenues, expenditures, EU funds, transfers | to check | to check | to verify |

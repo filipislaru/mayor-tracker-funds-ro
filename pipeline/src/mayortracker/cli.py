@@ -195,6 +195,47 @@ def normalise_uat_cmd() -> None:
     typer.echo("Normalised UAT and locality tables and geometries successfully.")
 
 
+@normalise_app.command("elections")
+def normalise_elections_cmd(
+    year: Annotated[
+        int | None,
+        typer.Option(
+            "--year",
+            help="Election year to normalise (2020 or 2024). Defaults to both.",
+        ),
+    ] = None,
+) -> None:
+    """Normalise mayoral election results into clean candidate, race, and term tables."""
+    from mayortracker.normalise.elections import normalise_elections, reconcile_county_party
+
+    settings = load_settings()
+    metrics = normalise_elections(settings, year=year)
+    for yr, m in metrics.items():
+        typer.echo(
+            f"Year {yr}: {m['total_races']} races ({m['uncontested_races']} uncontested), "
+            f"{m['candidates_count']} candidate entries, "
+            f"named candidates: {m['named_candidates']}, named winners: {m['named_winners']}."
+        )
+        if m["discrepancy_races"] > 0:
+            typer.echo(
+                f"  Vote-sum discrepancies: {m['discrepancy_races']} races "
+                f"(max discrepancy: {m['max_discrepancy']} votes)."
+            )
+        if m.get("unmatched_races"):
+            typer.echo(
+                f"  UAT reference match: {m['matched_count']}/{m['total_races']} matched, "
+                f"unmatched races: {m['unmatched_races']}, missing UATs: {m['missing_uats']}."
+            )
+        else:
+            matched_c = m.get("matched_count", m["total_races"])
+            typer.echo(f"  UAT reference match: {matched_c}/{m['total_races']} matched (100.00%).")
+        recs = reconcile_county_party(settings, yr)
+        if recs:
+            typer.echo(f"  County reconciliation discrepancies vs pv_final: {len(recs)} entries.")
+        else:
+            typer.echo("  County reconciliation: 100% match against pv_final.")
+
+
 if __name__ == "__main__":  # pragma: no cover
     app()
 

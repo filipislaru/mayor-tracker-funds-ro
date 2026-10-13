@@ -1,6 +1,6 @@
 # T002 — UAT and locality reference tables, boundaries, name normalisation
 
-Status: in review
+Status: done
 Depends on: T001
 Branch: task/T002-uat-reference
 
