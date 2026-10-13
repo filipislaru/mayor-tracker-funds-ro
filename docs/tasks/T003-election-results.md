@@ -1,6 +1,6 @@
 # T003 — Mayoral election results, 2020 and 2024
 
-Status: in review
+Status: done
 Depends on: T001, T002
 Branch: task/T003-election-results
 

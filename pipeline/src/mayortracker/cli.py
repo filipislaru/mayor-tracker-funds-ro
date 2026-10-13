@@ -138,6 +138,20 @@ def ingest_lau_boundaries_cmd() -> None:
     )
 
 
+@ingest_app.command("kohesio")
+def ingest_kohesio_cmd() -> None:
+    """Download official Kohesio datasets for Romania (projects, beneficiaries, NUTS)."""
+    from mayortracker.ingest.kohesio import ingest_kohesio
+
+    settings = load_settings()
+    entries = ingest_kohesio(settings)
+    for entry in entries:
+        typer.echo(
+            f"Downloaded {entry.filename} ({entry.bytes} bytes, sha256={entry.sha256[:8]}...)"
+        )
+
+
+
 @ingest_app.command("register-file")
 def register_file_cmd(
     path: Annotated[
@@ -234,6 +248,52 @@ def normalise_elections_cmd(
             typer.echo(f"  County reconciliation discrepancies vs pv_final: {len(recs)} entries.")
         else:
             typer.echo("  County reconciliation: 100% match against pv_final.")
+
+
+@normalise_app.command("kohesio")
+def normalise_kohesio_cmd() -> None:
+    """Normalise Kohesio projects, beneficiaries, and link local authorities to UATs."""
+    from mayortracker.normalise.kohesio import normalise_kohesio
+
+    settings = load_settings()
+    metrics = normalise_kohesio(settings)
+    typer.echo(
+        f"Projects: {metrics.total_projects:,} total ({metrics.projects_14_20:,} for 2014-2020, "
+        f"{metrics.projects_21_27:,} for 2021-2027)."
+    )
+    typer.echo(
+        f"Projects with local-authority beneficiaries: {metrics.projects_with_la:,} "
+        f"({metrics.la_project_share_pct:.2f}%)."
+    )
+    typer.echo(
+        f"Beneficiaries: {metrics.total_beneficiaries:,} unique "
+        f"({metrics.local_authority_beneficiaries:,} local authorities)."
+    )
+    typer.echo(
+        f"  Matched cleanly: {metrics.matched_local_authorities:,} "
+        f"(exact: {metrics.matches_by_method.get('name_county_exact', 0)}, "
+        f"normalised: {metrics.matches_by_method.get('name_county_normalised', 0)})."
+    )
+    ambig_count = metrics.ambiguous_or_unmatched_local_authorities
+    cand_count = metrics.matches_by_method.get('locality_candidate', 0)
+    unmatched_count = metrics.matches_by_method.get('unmatched_local_authority', 0)
+    typer.echo(
+        f"  Ambiguous / unmatched local authorities: {ambig_count:,} "
+        f"(locality candidates: {cand_count}, unmatched/disagreements: {unmatched_count})."
+    )
+    typer.echo(
+        f"Fiscal codes: crosswalk built. Flags: {metrics.multi_uat_fiscal_codes_count} "
+        f"multi-UAT fiscal codes, {metrics.multi_fiscal_code_uats_count} multi-fiscal-code UATs."
+    )
+    typer.echo("Top 5 UATs by EU co-financing (total / shared):")
+    for u in metrics.top_20_uats[:5]:
+        amt = u["total_eu_budget_eur"]
+        shared = u.get("shared_eu_budget_eur", 0.0)
+        typer.echo(
+            f"  {u['siruta']} {u['uat_name']} ({u['county_code']}): €{amt:,.2f} "
+            f"(shared: €{shared:,.2f})"
+        )
+
 
 
 if __name__ == "__main__":  # pragma: no cover
