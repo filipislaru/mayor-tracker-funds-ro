@@ -285,11 +285,13 @@ def normalise_kohesio_cmd() -> None:
         f"Fiscal codes: crosswalk built. Flags: {metrics.multi_uat_fiscal_codes_count} "
         f"multi-UAT fiscal codes, {metrics.multi_fiscal_code_uats_count} multi-fiscal-code UATs."
     )
-    typer.echo("Top 5 UATs by EU co-financing:")
+    typer.echo("Top 5 UATs by EU co-financing (total / shared):")
     for u in metrics.top_20_uats[:5]:
-        amt = u['total_eu_budget_eur']
+        amt = u["total_eu_budget_eur"]
+        shared = u.get("shared_eu_budget_eur", 0.0)
         typer.echo(
-            f"  {u['siruta']} {u['uat_name']} ({u['county_code']}): €{amt:,.2f}"
+            f"  {u['siruta']} {u['uat_name']} ({u['county_code']}): €{amt:,.2f} "
+            f"(shared: €{shared:,.2f})"
         )
 
 

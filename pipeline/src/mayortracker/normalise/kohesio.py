@@ -691,15 +691,36 @@ def normalise_kohesio(
     confirmed_siruta_map = {
         m["beneficiary_id"]: m["siruta"] for m in confirmed_uat_matches if m["siruta"] is not None
     }
-    # Calculate EU co-financing per UAT
+    # Map project to set of distinct confirmed UAT SIRUTAs
+    proj_to_uats: dict[str, set[int]] = {}
+    for _, b_row in beneficiaries_df.iterrows():
+        bid = b_row["beneficiary_id"]
+        pid = b_row["project_id"]
+        if bid in confirmed_siruta_map:
+            s_id = confirmed_siruta_map[bid]
+            if pid not in proj_to_uats:
+                proj_to_uats[pid] = set()
+            proj_to_uats[pid].add(s_id)
+
+    # Calculate EU co-financing per UAT and shared amount (projects involving >1 UAT)
     uat_funds: dict[int, float] = {}
+    uat_shared_funds: dict[int, float] = {}
     for _, p_row in dedup_projects_df.iterrows():
-        b_pairs = beneficiaries_df[beneficiaries_df["project_id"] == p_row["project_id"]]
+        pid = p_row["project_id"]
+        uats_in_proj = proj_to_uats.get(pid, set())
+        is_shared_proj = len(uats_in_proj) > 1
+        b_pairs = beneficiaries_df[beneficiaries_df["project_id"] == pid]
+        seen_sirutas_in_p = set()
         for _, b_row in b_pairs.iterrows():
             bid = b_row["beneficiary_id"]
             if bid in confirmed_siruta_map:
                 s_id = confirmed_siruta_map[bid]
-                uat_funds[s_id] = uat_funds.get(s_id, 0.0) + float(p_row["eu_budget"])
+                if s_id not in seen_sirutas_in_p:
+                    seen_sirutas_in_p.add(s_id)
+                    amt = float(p_row["eu_budget"])
+                    uat_funds[s_id] = uat_funds.get(s_id, 0.0) + amt
+                    if is_shared_proj:
+                        uat_shared_funds[s_id] = uat_shared_funds.get(s_id, 0.0) + amt
 
     top_20_list = []
     siruta_to_name = {r["siruta"]: (r["name"], r["county_code"]) for _, r in uats_df.iterrows()}
@@ -710,6 +731,7 @@ def normalise_kohesio(
             "uat_name": u_name,
             "county_code": c_code,
             "total_eu_budget_eur": amt,
+            "shared_eu_budget_eur": uat_shared_funds.get(s_id, 0.0),
         })
 
     # 7. Write Parquet and CSV Deliverables
