@@ -151,6 +151,18 @@ def ingest_kohesio_cmd() -> None:
         )
 
 
+@ingest_app.command("budget-exec")
+def ingest_budget_exec_cmd() -> None:
+    """Download official local budget execution files from data.gov.ro."""
+    from mayortracker.ingest.budget_exec import ingest_budget_exec
+
+    settings = load_settings()
+    entries = ingest_budget_exec(settings)
+    for entry in entries:
+        typer.echo(
+            f"Downloaded {entry.filename} ({entry.bytes} bytes, sha256={entry.sha256[:8]}...)"
+        )
+
 
 @ingest_app.command("register-file")
 def register_file_cmd(
@@ -275,8 +287,8 @@ def normalise_kohesio_cmd() -> None:
         f"normalised: {metrics.matches_by_method.get('name_county_normalised', 0)})."
     )
     ambig_count = metrics.ambiguous_or_unmatched_local_authorities
-    cand_count = metrics.matches_by_method.get('locality_candidate', 0)
-    unmatched_count = metrics.matches_by_method.get('unmatched_local_authority', 0)
+    cand_count = metrics.matches_by_method.get("locality_candidate", 0)
+    unmatched_count = metrics.matches_by_method.get("unmatched_local_authority", 0)
     typer.echo(
         f"  Ambiguous / unmatched local authorities: {ambig_count:,} "
         f"(locality candidates: {cand_count}, unmatched/disagreements: {unmatched_count})."
@@ -295,7 +307,28 @@ def normalise_kohesio_cmd() -> None:
         )
 
 
+@normalise_app.command("budget-exec")
+def normalise_budget_exec_cmd() -> None:
+    """Normalise local budget execution files into EU funds received and spent per UAT and year."""
+    from mayortracker.normalise.budget_exec import normalise_budget_exec
+
+    settings = load_settings()
+    metrics = normalise_budget_exec(settings)
+    typer.echo(f"Years processed: {metrics.years_processed}")
+    typer.echo(
+        f"Raw locality rows: {metrics.total_raw_rows:,} -> {metrics.total_uats_produced:,} UATs "
+        f"({metrics.matched_uats_count:,} matched to reference, "
+        f"{metrics.unmatched_uats_count} unmatched)."
+    )
+    for yr in metrics.years_processed:
+        rec = metrics.total_eu_received_by_year.get(yr, 0)
+        spent = metrics.total_eu_spent_by_year.get(yr, 0)
+        outliers = metrics.outlier_count_by_year.get(yr, 0)
+        typer.echo(f"Year {yr}:")
+        typer.echo(f"  EU Revenue Received: {rec:,.2f} RON")
+        typer.echo(f"  EU Project Spending: {spent:,.2f} RON")
+        typer.echo(f"  Outliers flagged (spending/revenue ratio > 10 or < 0.1): {outliers}")
+
 
 if __name__ == "__main__":  # pragma: no cover
     app()
-

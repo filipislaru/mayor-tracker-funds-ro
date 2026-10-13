@@ -1,0 +1,14 @@
+# Manual / verified SIRUTA overrides for external datasets.
+# Every entry must document file-based evidence.
+overrides:
+  138404:
+    target_uat_siruta: 180091
+    source_name_in_file: "COMUNA RACSA"
+    county_code: "SM"
+    evidence: >
+      In the raw local budget execution file sheet 31 (Satu Mare), the row labelled 'COMUNA RACSA'
+      uses SIRUTA code 138404. In the official SIRUTA register (data/raw/siruta/2026-10-12/siruta_s1_2026.csv),
+      138404 is the component village of Racșa (sirsup=180091, tip=9). Comuna Racșa was established as an
+      independent commune with UAT SIRUTA 180091 under Law 84/2010 (detached from Comuna Orașu Nou).
+      The locality reference table (data/processed/locality.parquet) confirms parent_uat_siruta=180091.
+      The execution reporting in sheet 31 mistakenly used the village code instead of the commune UAT code.

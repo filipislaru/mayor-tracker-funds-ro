@@ -1,0 +1,75 @@
+# Budget execution column mappings per year.
+# Extracted from official Row 12 codes and Row 9-11 labels in annual execution files.
+# Classification confirmed via official Ministry of Finance nomenclatures:
+#   - Anexa 2: Clasificatia functionala a veniturilor bugetelor locale
+#   - Anexa I ec: Clasificatia economica a cheltuielilor
+"2024":
+  sheet_layout:
+    header_row_labels_start: 9
+    header_row_labels_end: 11
+    code_row: 12
+    col_num_row: 13
+    siruta_col: "B"
+    uat_name_col: "C"
+  eu_revenue_lines:
+    - code: "48.02"
+      col_letter: "W"
+      col_number: 20
+      label: "Sume primite de la UE/alţi donatori în contul plăţilor efectuate şi prefinanţării aferente cadrului financiar 2014-2020"
+      category: "eu_received_2014_2020"
+      period: "2014-2020"
+      include_in_received: true
+      reason: "Official 2014–2020 EU framework revenue chapter for local budgets"
+    - code: "45.02"
+      col_letter: "U"
+      col_number: 18
+      label: "Sume primite de la UE/alti donatori in contul platilor efectuate si prefinantari"
+      category: "eu_received_unspecified"
+      period: "not specified"
+      include_in_received: true
+      reason: "Official EU and external donors revenue chapter in local budget execution"
+      notes: >
+        In official classification Anexa 2, Chapter 45.02 contains sub-lines for post-accession
+        funds (.01-.16), EEA/Norway/Swiss mechanisms (.17-.21), and explicitly the 2021-2027 framework
+        funds (.48 FEDR, .49 FSE+, .50 FC, .51 FTJ, .53 FEADR, etc.). In the centralized summary sheet,
+        all sub-lines are aggregated under chapter 45.02 without broken-out periods.
+    - code: "46.02"
+      col_letter: "V"
+      col_number: 19
+      label: "Alte sume primite de la UE"
+      category: "eu_received_other"
+      period: "not specified"
+      include_in_received: true
+      reason: "Other operational and specific EU receipts received into the local budget"
+      notes: >
+        In Anexa 2, includes operational programs convergence (.03), 2014-2020 operational programs (.04),
+        and eligible expenditures related to PNRR (.05).
+  eu_expenditure_lines:
+    - code: "58"
+      col_letter: "AH"
+      col_number: 31
+      label: "Proiecte cu finanţare din fonduri externe nerambursabile aferente cadrului financiar 2014-2020"
+      category: "eu_spent_2014_2020"
+      period: "2014-2020"
+    - code: "56"
+      col_letter: "AF"
+      col_number: 29
+      label: "Proiecte cu finanţare din fonduri externe nerambursabile"
+      category: "eu_spent_unspecified"
+      period: "not specified"
+      notes: >
+        In economic classification Anexa I ec, Title VIII contains post-accession FEN (.01-.25),
+        EEA/Norway mechanisms (.27-.33), and explicitly 2021-2027 projects (.48-.77 FEDR, FSE+, FC, FTJ, etc.).
+        Period not specified in header label.
+    - code: "60"
+      col_letter: "AJ"
+      col_number: 33
+      label: "Proiecte cu finantare din sumele reprezentând asistenţa financiară nerambursabilă aferentă PNRR"
+      category: "eu_spent_pnrr_grant"
+      period: "PNRR (2021-2026)"
+    - code: "61"
+      col_letter: "AK"
+      col_number: 34
+      label: "Proiecte cu finantare din sumele aferente componentei de împrumut a PNRR"
+      category: "eu_spent_pnrr_loan"
+      period: "PNRR (2021-2026)"
